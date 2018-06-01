@@ -86,7 +86,8 @@ constructor(public userData: UserData,
    this.userdata();
    this.getWallletBalance();
    this.getStxWallletBalance();
-   this.getAddress();
+  
+   this.createAddress()
    
    this.getStxAddress();
    this.getTx();
@@ -99,10 +100,12 @@ constructor(public userData: UserData,
 
   }
 userdata(){
-       this.user=JSON.parse(localStorage.getItem('logindetail'));
+  console.log("localhost::::::::::",JSON.parse(localStorage.getItem('logindetail')))
+       this.user=JSON.parse(localStorage.getItem('logindetail'))
+       console.log("this user>>>>>>>>>>>>>>>>",this.user.user.email)
        if(this.user!=null||this.user!=undefined){
-       this.userEmail.email=this.user.user.email;
-
+      this.userEmail.email=this.user.user.email;
+      console.log("this.userEmail????????????????????",this.userEmail.email)
       }
    }
 
@@ -120,22 +123,51 @@ userdata(){
   // For stx balence
   getStxWallletBalance(){
       this.setupService.createstxWalletDetail({userMailId:this.userEmail.email}).subscribe((result) => {
-
+  
          this.stxbalance = result.balance;
     });
   }
 
 
- getAddress(){
+ createAddress(){
+   console.log("calling<<<<<<<",this.address)
+   if(this.address=="undefined" || this.address==undefined){
+     console.log("this.user---------------------------------------",this.userEmail.email)
       this.setupService.createAddressDetail({userMailId:this.userEmail.email}).subscribe((result) => {
         this.address = result.newaddress;
-      
+    console.log("result..............................",result)
+    if(result.statusCode>200)
+    {
+      console.log("lets get address from db")
+       this.setupService.getDetail({userMailId:this.userEmail.email}).subscribe((result) => {
+        this.address = result.user.userBCHAddress;
+      console.log("22222222222",this.address)
         return this.address;
-     
-    });
 
+        });
+    }
+    else
+      return this.address;
+    });
     }
   
+     
+    
+     // console.log("11111111111111",result)
+     //    if(this.address)
+     //    return this.address;
+      else
+     {
+       this.setupService.getDetail({userMailId:this.userEmail.email}).subscribe((result) => {
+        this.address = result.newaddress;
+      // console.log("22222222222",result)
+        return this.address;
+
+        });
+      }
+  
+}
+    
    
     //For stx address
      getStxAddress(){
@@ -152,14 +184,14 @@ userdata(){
         if(result.statusCode==200){
 
            
-          // this.tx = result.tx;
+          this.tx = []
            for(var i=0;i< result.tx.length;i++){
              
-             this.tx.push({time : new Date(result.tx[i].time *1000), amount : result.tx[i].amount, txid : result.tx[i].txid});
+             this.tx.push({time : new Date(result.tx[i].time*1000), amount : result.tx[i].amount, txid : result.tx[i].txid});
            }  
           }
-          this.tx = result.tx;
-          
+          // this.tx = result.tx;
+          console.log("this.tx************************",this.tx)
 
      });
 
@@ -174,9 +206,11 @@ getStxTx(){
        });
        }
 //for btc address borcode reader
-showConfirm(){
+async showConfirm(){
+  console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+  // this.address = await this.createAddress();
    var btcaddress= this.address;
-  
+  console.log("btcaddress)))))))))))))))))))))))))))))))))))))",btcaddress)
   let alert = this.alertCtrl.create({
      title: '<div class="center" >My BTC Address</div>',
      subTitle: '<div class="center" (click)="copyAddress()"> <img src="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl='+btcaddress+'"  alt="QR Code" style="width: 80%;" ></div><div class="center">'+btcaddress+'<div>',

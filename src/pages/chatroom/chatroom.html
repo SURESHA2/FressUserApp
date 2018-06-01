@@ -41,7 +41,14 @@
         <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="userContent ==''">
         Send
       </button>
-       
+      <ion-fab center middle>
+     <button ion-fab color="primary"><ion-icon name="repeat"></ion-icon></button>
+     <ion-fab-list side="top">
+       <button ion-fab color="primary"><ion-icon name="link"></ion-icon></button>
+       <button ion-fab color="primary"><ion-icon name="logo-googleplus"></ion-icon></button>
+       </ion-fab-list>
+</ion-fab>
+   
       </ion-col>
     </ion-row>
   </ion-toolbar>

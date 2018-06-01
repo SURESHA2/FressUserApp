@@ -18,12 +18,12 @@
     <ion-segment [(ngModel)]="wallet">
 
       <ion-segment-button value="btcpage">
-      BTC Coin
+      BTC 
       </ion-segment-button>
 
-      <!-- <ion-segment-button value="stxpage">
+      <ion-segment-button value="stxpage">
       STX
-      </ion-segment-button> -->
+      </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 
@@ -112,8 +112,8 @@
 
            <ion-grid>
             <ion-row *ngFor="let item of tx">
-              <ion-col>
-                {{item.time | date : 'dd-MM-2018 hh:mm:ss'}}
+             <ion-col>
+                {{item.time | date : 'dd-MM-yyyy hh:mm:ss'}}
                 </ion-col>
               <ion-col>
                 {{item.amount}}
@@ -129,7 +129,7 @@
           </ion-list>
         </form>
      
-       <!-- <form #psForm="ngForm" novalidate>
+       <form #psForm="ngForm" novalidate>
           <ion-list no-lines class="form-input-fields">
            <div [ngSwitch]="wallet"> 
              <ion-list *ngSwitchCase="'stxpage'">
@@ -149,7 +149,7 @@
            </ion-col>
          </ion-row>
        </ion-grid>
-            <button class="button-backcolor" ion-button (click)="changespendingPassword(psForm)" type="submit" block>Save</button>
+           <!--  <button class="button-backcolor" ion-button (click)="changespendingPassword(psForm)" type="submit" block>Save</button> -->
           
      </ion-list>
            <h3 align="center">Transaction list</h3>
@@ -170,7 +170,7 @@
            <ion-grid>
             <ion-row *ngFor="let item of stxtx">
               <ion-col>
-                {{item.time | date: 'shortDate' }}
+               {{item.time | date : 'dd-MM-yyyy hh:mm:ss'}}
               </ion-col>
               <ion-col>
                 {{item.amount}}
@@ -185,4 +185,4 @@
           </ion-list>
       </form>
  </ion-content>
-  -->
+ 

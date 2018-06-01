@@ -325,17 +325,21 @@ var SetupService = (function () {
     };
     //For Stx WalletPage
     SetupService.prototype.createstxWalletDetail = function (email) {
-        var response = this.http.post(this.endpoint_url + '/usercoininr/getBalBCH', email).map(function (res) { return res.json(); });
+        var response = this.http.post(this.endpoint_url + '/usercoin/getBalBCH', email).map(function (res) { return res.json(); });
         return response;
     };
     //Address details
-    SetupService.prototype.createAddressDetail = function (email) {
-        var response = this.http.post(this.endpoint_url + '/usercoin/getNewBCHAddress', email).map(function (res) { return res.json(); });
+    SetupService.prototype.createAddressDetail = function (userMailId) {
+        var response = this.http.post(this.endpoint_url + '/usercoin/getNewBCHAddress', userMailId).map(function (res) { return res.json(); });
+        return response;
+    };
+    SetupService.prototype.getDetail = function (userMailId) {
+        var response = this.http.post(this.endpoint_url + '/usercoin/getuserdetails', userMailId).map(function (res) { return res.json(); });
         return response;
     };
     //For Stx Address details
     SetupService.prototype.createstxAddressDetail = function (email) {
-        var response = this.http.post(this.endpoint_url + '/usercoininr/getNewBCHAddress', email).map(function (res) { return res.json(); });
+        var response = this.http.post(this.endpoint_url + '/usercoin/getNewBCHAddress', email).map(function (res) { return res.json(); });
         return response;
     };
     // for Transaction details
@@ -345,7 +349,7 @@ var SetupService = (function () {
     };
     //For Stx Transaction Details
     SetupService.prototype.createstxTransactionDetail = function (email) {
-        var response = this.http.post(this.endpoint_url + '/usercoininr/getTxsListBCH', email).map(function (res) { return res.json(); });
+        var response = this.http.post(this.endpoint_url + '/usercoin/getTxsListBCH', email).map(function (res) { return res.json(); });
         return response;
     };
     // for send page
@@ -355,7 +359,7 @@ var SetupService = (function () {
     };
     //For sendStx details
     SetupService.prototype.createstxSendDetail = function (sendstxdetails) {
-        var response = this.http.post(this.endpoint_url + '/usercoininr/sendBCH', sendstxdetails).map(function (res) { return res.json(); });
+        var response = this.http.post(this.endpoint_url + '/usercoin/sendBCH', sendstxdetails).map(function (res) { return res.json(); });
         return response;
     };
     //get all traders list
@@ -456,15 +460,16 @@ var SetupService = (function () {
     };
     //sent Otp To Email Verificatation
     SetupService.prototype.EmailVerifyforAccount = function (email) {
-        console.log("email = = " + JSON.stringify(email));
+        //console.log("email = = "+JSON.stringify(email));
         var response = this.http.post(this.endpoint_url + '/user/sentOtpToEmailVerificatation', email).map(function (res) { return res.json(); });
         return response;
     };
     SetupService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
     ], SetupService);
     return SetupService;
+    var _a;
 }());
 
 //# sourceMappingURL=setup.services.js.map
@@ -871,7 +876,7 @@ var ChatroomPage = (function () {
     };
     ChatroomPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-chat-room',template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\chatroom\chatroom.html"*/'\n\n\n\n<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>{{messageDetails.recipient}}</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-grid>\n\n    <ion-row *ngFor="let message of messages "> \n\n \n\n\n\n\n\n      <ion-col offset-3 col-9 *ngIf="message.sender !== nickname" class="message" [ngClass]="{\'my_message\': message.sender === nickname, \'other_message\': message.sender !== nickname}">\n\n        <span class="user_name">{{ message.sender }}</span><br>\n\n        <span>{{ message.content }}</span>\n\n      <div class="time">{{message.createdAt | date:\'hh:MM\'}}</div> \n\n      </ion-col>\n\n      <ion-col col-9 *ngIf="message.sender === nickname" class="message" [ngClass]="{\'my_message\': message.sender === nickname, \'other_message\': message.sender !== nickname}">\n\n        <span class="user_name">{{ message.sender }}</span><br>\n\n        <span>{{ message.content }}</span>\n\n   <div class="time">{{message.createdAt | date:\'hh:MM\'}}</div>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n</ion-content>\n\n\n\n<ion-footer>\n\n  <ion-toolbar>\n\n    <ion-row class="message_row">\n\n      <ion-col col-9>\n\n        <ion-item no-lines>\n\n          <ion-input type="text" placeholder="type your message here..." [(ngModel)]="userContent"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-3>\n\n        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="userContent ==\'\'">\n\n        Send\n\n      </button>\n\n       <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="userContent ==\'\'">\n\n        Exchange\n\n      </button>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-toolbar>\n\n</ion-footer>'/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\chatroom\chatroom.html"*/,
+            selector: 'page-chat-room',template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\chatroom\chatroom.html"*/'\n\n\n\n<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>{{messageDetails.recipient}}</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-grid>\n\n    <ion-row *ngFor="let message of messages "> \n\n \n\n\n\n\n\n      <ion-col offset-3 col-9 *ngIf="message.sender !== nickname" class="message" [ngClass]="{\'my_message\': message.sender === nickname, \'other_message\': message.sender !== nickname}">\n\n        <span class="user_name">{{ message.sender }}</span><br>\n\n        <span>{{ message.content }}</span>\n\n      <div class="time">{{message.createdAt | date:\'hh:MM\'}}</div> \n\n      </ion-col>\n\n      <ion-col col-9 *ngIf="message.sender === nickname" class="message" [ngClass]="{\'my_message\': message.sender === nickname, \'other_message\': message.sender !== nickname}">\n\n        <span class="user_name">{{ message.sender }}</span><br>\n\n        <span>{{ message.content }}</span>\n\n   <div class="time">{{message.createdAt | date:\'hh:MM\'}}</div>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n</ion-content>\n\n\n\n<ion-footer>\n\n  <ion-toolbar>\n\n    <ion-row class="message_row">\n\n      <ion-col col-9>\n\n        <ion-item no-lines>\n\n          <ion-input type="text" placeholder="type your message here..." [(ngModel)]="userContent"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-3>\n\n        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="userContent ==\'\'">\n\n        Send\n\n      </button>\n\n      <ion-fab center middle>\n\n     <button ion-fab color="primary"><ion-icon name="repeat"></ion-icon></button>\n\n     <ion-fab-list side="top">\n\n       <button ion-fab color="primary"><ion-icon name="link"></ion-icon></button>\n\n       <button ion-fab color="primary"><ion-icon name="logo-googleplus"></ion-icon></button>\n\n       </ion-fab-list>\n\n</ion-fab>\n\n   \n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-toolbar>\n\n</ion-footer>'/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\chatroom\chatroom.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */],
@@ -1442,6 +1447,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 
 
 //import { NgForm } from '@angular/forms';
@@ -1492,8 +1532,7 @@ var WalletPage = (function () {
         this.userdata();
         this.getWallletBalance();
         this.getStxWallletBalance();
-        this.getAddress();
-        this.getAddress1();
+        this.createAddress();
         this.getStxAddress();
         this.getTx();
         this.getStxTx();
@@ -1503,9 +1542,12 @@ var WalletPage = (function () {
         });
     }
     WalletPage.prototype.userdata = function () {
+        console.log("localhost::::::::::", JSON.parse(localStorage.getItem('logindetail')));
         this.user = JSON.parse(localStorage.getItem('logindetail'));
+        console.log("this user>>>>>>>>>>>>>>>>", this.user.user.email);
         if (this.user != null || this.user != undefined) {
             this.userEmail.email = this.user.user.email;
+            console.log("this.userEmail????????????????????", this.userEmail.email);
         }
     };
     WalletPage.prototype.getWallletBalance = function () {
@@ -1522,12 +1564,33 @@ var WalletPage = (function () {
             _this.stxbalance = result.balance;
         });
     };
-    WalletPage.prototype.getAddress = function () {
+    WalletPage.prototype.createAddress = function () {
         var _this = this;
-        this.setupService.createAddressDetail({ userMailId: this.userEmail.email }).subscribe(function (result) {
-            _this.address = result.newaddress;
-            return _this.address;
-        });
+        console.log("calling<<<<<<<", this.address);
+        if (this.address == "undefined" || this.address == undefined) {
+            console.log("this.user---------------------------------------", this.userEmail.email);
+            this.setupService.createAddressDetail({ userMailId: this.userEmail.email }).subscribe(function (result) {
+                _this.address = result.newaddress;
+                console.log("result..............................", result);
+                if (result.statusCode > 200) {
+                    console.log("lets get address from db");
+                    _this.setupService.getDetail({ userMailId: _this.userEmail.email }).subscribe(function (result) {
+                        _this.address = result.user.userBCHAddress;
+                        console.log("22222222222", _this.address);
+                        return _this.address;
+                    });
+                }
+                else
+                    return _this.address;
+            });
+        }
+        else {
+            this.setupService.getDetail({ userMailId: this.userEmail.email }).subscribe(function (result) {
+                _this.address = result.newaddress;
+                // console.log("22222222222",result)
+                return _this.address;
+            });
+        }
     };
     //For stx address
     WalletPage.prototype.getStxAddress = function () {
@@ -1541,12 +1604,13 @@ var WalletPage = (function () {
         var _this = this;
         this.setupService.createTransactionDetail({ userMailId: this.userEmail.email }).subscribe(function (result) {
             if (result.statusCode == 200) {
-                // this.tx = result.tx;
+                _this.tx = [];
                 for (var i = 0; i < result.tx.length; i++) {
                     _this.tx.push({ time: new Date(result.tx[i].time * 1000), amount: result.tx[i].amount, txid: result.tx[i].txid });
                 }
             }
-            _this.tx = result.tx;
+            // this.tx = result.tx;
+            console.log("this.tx************************", _this.tx);
         });
     };
     //For Stx Transaction
@@ -1560,35 +1624,43 @@ var WalletPage = (function () {
     };
     //for btc address borcode reader
     WalletPage.prototype.showConfirm = function () {
-        var _this = this;
-        var btcaddress = this.address;
-        var alert = this.alertCtrl.create({
-            title: '<div class="center" >My BTC Address</div>',
-            subTitle: '<div class="center" (click)="copyAddress()"> <img src="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=' + btcaddress + '"  alt="QR Code" style="width: 80%;" ></div><div class="center">' + btcaddress + '<div>',
-            buttons: [
-                {
-                    text: 'copy',
-                    handler: function (data) {
-                        _this.clipboard.copy(btcaddress);
-                        _this.responseData = Text;
-                        var toast = _this.toastCtrl.create({
-                            message: _this.responseData.Copy,
-                            showCloseButton: true,
-                            closeButtonText: 'Copyed successfully',
-                            duration: 5000
-                        });
-                        toast.present();
-                    }
-                },
-                {
-                    text: 'Cancel',
-                    handler: function (data) {
-                        console.log("hello");
-                    }
-                },
-            ]
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var btcaddress, alert;
+            return __generator(this, function (_a) {
+                console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                btcaddress = this.address;
+                console.log("btcaddress)))))))))))))))))))))))))))))))))))))", btcaddress);
+                alert = this.alertCtrl.create({
+                    title: '<div class="center" >My BTC Address</div>',
+                    subTitle: '<div class="center" (click)="copyAddress()"> <img src="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=' + btcaddress + '"  alt="QR Code" style="width: 80%;" ></div><div class="center">' + btcaddress + '<div>',
+                    buttons: [
+                        {
+                            text: 'copy',
+                            handler: function (data) {
+                                _this.clipboard.copy(btcaddress);
+                                _this.responseData = Text;
+                                var toast = _this.toastCtrl.create({
+                                    message: _this.responseData.Copy,
+                                    showCloseButton: true,
+                                    closeButtonText: 'Copyed successfully',
+                                    duration: 5000
+                                });
+                                toast.present();
+                            }
+                        },
+                        {
+                            text: 'Cancel',
+                            handler: function (data) {
+                                console.log("hello");
+                            }
+                        },
+                    ]
+                });
+                alert.present();
+                return [2 /*return*/];
+            });
         });
-        alert.present();
     };
     WalletPage.prototype.openSendPage = function () {
         this.nav.push(__WEBPACK_IMPORTED_MODULE_4__send_send__["a" /* SendPage */]);
@@ -1629,12 +1701,23 @@ var WalletPage = (function () {
     };
     WalletPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-wallet',template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\wallet\wallet.html"*/'<!--\n\n  Generated template for the WalletPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n      <button ion-button menuToggle>\n\n         <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title>Wallet</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<br><br>\n\n  <ion-toolbar class="blue-color" >\n\n    <ion-segment [(ngModel)]="wallet">\n\n\n\n      <ion-segment-button value="btcpage">\n\n      BTC\n\n      </ion-segment-button>\n\n\n\n      <!-- <ion-segment-button value="stxpage">\n\n      STX\n\n      </ion-segment-button> -->\n\n    </ion-segment>\n\n  </ion-toolbar>\n\n\n\n\n\n    \n\n<!-- <ion-content padding>\n\n     <ion-list>\n\n         <h3 align="center">My Balance</h3>\n\n         <div>\n\n          <p align="center">{{balance}}</p>\n\n         </div>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="openSendPage(SendPage)">Send</button>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="doPrompt(send-amount)">Recieve</button>\n\n     </ion-list>\n\n           <h3 align="center">Transaction list</h3>\n\n           <ion-grid>\n\n             <ion-row>\n\n                <ion-col>\n\n                  Date\n\n                </ion-col>\n\n                <ion-col>\n\n                  Amount\n\n                </ion-col>\n\n                <ion-col>\n\n                  Transaction list\n\n                </ion-col>\n\n             </ion-row>\n\n           </ion-grid>\n\n\n\n           <ion-grid>\n\n            <ion-row *ngFor="let item of tx">\n\n              <ion-col>\n\n                {{item.time | date : \'shortDate\'}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{item.amount}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{(item.txid | slice:0:10)+".."}}\n\n              </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n</ion-content>\n\n -->\n\n\n\n\n\n\n\n\n\n <ion-content padding>\n\n        <form #pForm="ngForm" novalidate>\n\n           <ion-list no-lines class="form-input-fields">\n\n              <div [ngSwitch]="wallet" >\n\n                  <ion-list *ngSwitchCase="\'btcpage\'">\n\n                  <br><br><br><br> <br><br><br><br>\n\n                  <ion-list>\n\n         <h3 style="color: #3896ea;" align="center">Total BTC Balance</h3>\n\n         <div>\n\n          <p align="center">{{BCHbalance}}</p>\n\n         </div>\n\n         <ion-grid>\n\n         <ion-row>\n\n            <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="openSendPage(SendPage)">Send</button>\n\n          </ion-col>\n\n           <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="showConfirm()">Recieve</button>\n\n           </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n         <!--  <button class="button-backcolor" ion-button (click)="changeCurrentPassword(pForm)" type="submit" block>Save</button> -->\n\n     </ion-list>\n\n           <h3 style="color: #3896ea;" align="center">Transaction list</h3>\n\n           <ion-grid>\n\n             <ion-row>\n\n                <ion-col>\n\n                  Date\n\n                </ion-col>\n\n                <ion-col>\n\n                  Amount\n\n                </ion-col>\n\n                <ion-col>\n\n              Transaction id\n\n                </ion-col>\n\n             </ion-row>\n\n           </ion-grid>\n\n\n\n           <ion-grid>\n\n            <ion-row *ngFor="let item of tx">\n\n              <ion-col>\n\n                {{item.time | date : \'dd-MM-2018 hh:mm:ss\'}}\n\n                </ion-col>\n\n              <ion-col>\n\n                {{item.amount}}\n\n              </ion-col>\n\n              <ion-col >\n\n                 {{(item.txid | slice:0:10)+".."}}\n\n              </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n                  \n\n                  </ion-list>\n\n              </div>\n\n          </ion-list>\n\n        </form>\n\n     \n\n       <!-- <form #psForm="ngForm" novalidate>\n\n          <ion-list no-lines class="form-input-fields">\n\n           <div [ngSwitch]="wallet"> \n\n             <ion-list *ngSwitchCase="\'stxpage\'">\n\n             <br><br><br><br> <br><br><br><br>\n\n              <ion-list>\n\n         <h3 align="center">Total STX Balance</h3>\n\n         <div>\n\n          <p align="center">{{stxbalance}}</p>\n\n         </div>\n\n         <ion-grid>\n\n         <ion-row>\n\n            <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="openSendsPage(SendsPage)">Send</button>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="showStxConfirm()">Recieve</button>\n\n           </ion-col>\n\n         </ion-row>\n\n       </ion-grid>\n\n            <button class="button-backcolor" ion-button (click)="changespendingPassword(psForm)" type="submit" block>Save</button>\n\n          \n\n     </ion-list>\n\n           <h3 align="center">Transaction list</h3>\n\n           <ion-grid>\n\n             <ion-row>\n\n                <ion-col>\n\n                  Date\n\n                </ion-col>\n\n                <ion-col>\n\n                  Amount\n\n                </ion-col>\n\n                <ion-col>\n\n                  Transaction id\n\n                </ion-col>\n\n             </ion-row>\n\n           </ion-grid>\n\n\n\n           <ion-grid>\n\n            <ion-row *ngFor="let item of stxtx">\n\n              <ion-col>\n\n                {{item.time | date: \'shortDate\' }}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{item.amount}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{(item.txid | slice:0:10)+".."}}\n\n              </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n             </ion-list>\n\n           </div>\n\n          </ion-list>\n\n      </form>\n\n </ion-content>\n\n  -->'/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\wallet\wallet.html"*/,
+            selector: 'page-wallet',template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\wallet\wallet.html"*/'<!--\n\n  Generated template for the WalletPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n      <button ion-button menuToggle>\n\n         <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title>Wallet</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<br><br>\n\n  <ion-toolbar class="blue-color" >\n\n    <ion-segment [(ngModel)]="wallet">\n\n\n\n      <ion-segment-button value="btcpage">\n\n      BTC \n\n      </ion-segment-button>\n\n\n\n      <ion-segment-button value="stxpage">\n\n      STX\n\n      </ion-segment-button>\n\n    </ion-segment>\n\n  </ion-toolbar>\n\n\n\n\n\n    \n\n<!-- <ion-content padding>\n\n     <ion-list>\n\n         <h3 align="center">My Balance</h3>\n\n         <div>\n\n          <p align="center">{{balance}}</p>\n\n         </div>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="openSendPage(SendPage)">Send</button>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="doPrompt(send-amount)">Recieve</button>\n\n     </ion-list>\n\n           <h3 align="center">Transaction list</h3>\n\n           <ion-grid>\n\n             <ion-row>\n\n                <ion-col>\n\n                  Date\n\n                </ion-col>\n\n                <ion-col>\n\n                  Amount\n\n                </ion-col>\n\n                <ion-col>\n\n                  Transaction list\n\n                </ion-col>\n\n             </ion-row>\n\n           </ion-grid>\n\n\n\n           <ion-grid>\n\n            <ion-row *ngFor="let item of tx">\n\n              <ion-col>\n\n                {{item.time | date : \'shortDate\'}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{item.amount}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{(item.txid | slice:0:10)+".."}}\n\n              </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n</ion-content>\n\n -->\n\n\n\n\n\n\n\n\n\n <ion-content padding>\n\n        <form #pForm="ngForm" novalidate>\n\n           <ion-list no-lines class="form-input-fields">\n\n              <div [ngSwitch]="wallet" >\n\n                  <ion-list *ngSwitchCase="\'btcpage\'">\n\n                  <br><br><br><br> <br><br><br><br>\n\n                  <ion-list>\n\n         <h3 style="color: #3896ea;" align="center">Total BTC Balance</h3>\n\n         <div>\n\n          <p align="center">{{BCHbalance}}</p>\n\n         </div>\n\n         <ion-grid>\n\n         <ion-row>\n\n            <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="openSendPage(SendPage)">Send</button>\n\n          </ion-col>\n\n           <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="showConfirm()">Recieve</button>\n\n           </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n         <!--  <button class="button-backcolor" ion-button (click)="changeCurrentPassword(pForm)" type="submit" block>Save</button> -->\n\n     </ion-list>\n\n           <h3 style="color: #3896ea;" align="center">Transaction list</h3>\n\n           <ion-grid>\n\n             <ion-row>\n\n                <ion-col>\n\n                  Date\n\n                </ion-col>\n\n                <ion-col>\n\n                  Amount\n\n                </ion-col>\n\n                <ion-col>\n\n              Transaction id\n\n                </ion-col>\n\n             </ion-row>\n\n           </ion-grid>\n\n\n\n           <ion-grid>\n\n            <ion-row *ngFor="let item of tx">\n\n             <ion-col>\n\n                {{item.time | date : \'dd-MM-yyyy hh:mm:ss\'}}\n\n                </ion-col>\n\n              <ion-col>\n\n                {{item.amount}}\n\n              </ion-col>\n\n              <ion-col >\n\n                 {{(item.txid | slice:0:10)+".."}}\n\n              </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n                  \n\n                  </ion-list>\n\n              </div>\n\n          </ion-list>\n\n        </form>\n\n     \n\n       <form #psForm="ngForm" novalidate>\n\n          <ion-list no-lines class="form-input-fields">\n\n           <div [ngSwitch]="wallet"> \n\n             <ion-list *ngSwitchCase="\'stxpage\'">\n\n             <br><br><br><br> <br><br><br><br>\n\n              <ion-list>\n\n         <h3 align="center">Total STX Balance</h3>\n\n         <div>\n\n          <p align="center">{{stxbalance}}</p>\n\n         </div>\n\n         <ion-grid>\n\n         <ion-row>\n\n            <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="openSendsPage(SendsPage)">Send</button>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="showStxConfirm()">Recieve</button>\n\n           </ion-col>\n\n         </ion-row>\n\n       </ion-grid>\n\n           <!--  <button class="button-backcolor" ion-button (click)="changespendingPassword(psForm)" type="submit" block>Save</button> -->\n\n          \n\n     </ion-list>\n\n           <h3 align="center">Transaction list</h3>\n\n           <ion-grid>\n\n             <ion-row>\n\n                <ion-col>\n\n                  Date\n\n                </ion-col>\n\n                <ion-col>\n\n                  Amount\n\n                </ion-col>\n\n                <ion-col>\n\n                  Transaction id\n\n                </ion-col>\n\n             </ion-row>\n\n           </ion-grid>\n\n\n\n           <ion-grid>\n\n            <ion-row *ngFor="let item of stxtx">\n\n              <ion-col>\n\n               {{item.time | date : \'dd-MM-yyyy hh:mm:ss\'}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{item.amount}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{(item.txid | slice:0:10)+".."}}\n\n              </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n             </ion-list>\n\n           </div>\n\n          </ion-list>\n\n      </form>\n\n </ion-content>\n\n '/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\wallet\wallet.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__providers_user_data__["a" /* UserData */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_user_data__["a" /* UserData */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* MenuController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* MenuController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_3__providers_setup_services__["a" /* SetupService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_setup_services__["a" /* SetupService */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_native_barcode_scanner__["a" /* BarcodeScanner */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_native_barcode_scanner__["a" /* BarcodeScanner */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_7__ionic_native_clipboard__["a" /* Clipboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__ionic_native_clipboard__["a" /* Clipboard */]) === "function" && _o || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_user_data__["a" /* UserData */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* MenuController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_setup_services__["a" /* SetupService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_6__ionic_native_barcode_scanner__["a" /* BarcodeScanner */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_7__ionic_native_clipboard__["a" /* Clipboard */]])
     ], WalletPage);
     return WalletPage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
 }());
 
 //# sourceMappingURL=wallet.js.map
@@ -1696,7 +1779,7 @@ var SendPage = (function () {
         this.senddetails.userMailId = this.email;
         this.submitted = true;
         if (Form.valid) {
-            //this.userData.send(this.send.amount);
+            //this.userData.(this.send.amount);
             var loading_1 = this.loadingCtrl.create({
                 content: 'transaction is procced...'
             });

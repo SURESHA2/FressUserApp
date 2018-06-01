@@ -48,19 +48,27 @@ export class SetupService {
     //For Stx WalletPage
      createstxWalletDetail(email:any) {   
          
-        var response = this.http.post(this.endpoint_url+'/usercoininr/getBalBCH',email ).map(res => res.json());
+        var response = this.http.post(this.endpoint_url+'/usercoin/getBalBCH',email ).map(res => res.json());
         return response;
     }
     //Address details
-     createAddressDetail(email:any) {   
+     createAddressDetail(userMailId:any) {   
          
-        var response = this.http.post(this.endpoint_url+'/usercoin/getNewBCHAddress',email ).map(res => res.json());
+        var response = this.http.post(this.endpoint_url+'/usercoin/getNewBCHAddress',userMailId ).map(res => res.json());
         return response;
+    }
+
+    
+     getDetail(userMailId:any) {   
+         
+        var response = this.http.post(this.endpoint_url+'/usercoin/getuserdetails',userMailId ).map(res => res.json());
+        return response;
+        
     }
     //For Stx Address details
     createstxAddressDetail(email:any) {   
          
-        var response = this.http.post(this.endpoint_url+'/usercoininr/getNewBCHAddress',email ).map(res => res.json());
+        var response = this.http.post(this.endpoint_url+'/usercoin/getNewBCHAddress',email ).map(res => res.json());
         return response;
     }
     // for Transaction details
@@ -72,7 +80,7 @@ export class SetupService {
       //For Stx Transaction Details
     createstxTransactionDetail(email:any) {   
          
-        var response = this.http.post(this.endpoint_url+'/usercoininr/getTxsListBCH',email ).map(res => res.json());
+        var response = this.http.post(this.endpoint_url+'/usercoin/getTxsListBCH',email ).map(res => res.json());
         return response;
     }
      // for send page
@@ -86,7 +94,7 @@ export class SetupService {
     //For sendStx details
      createstxSendDetail(sendstxdetails:any) {   
          
-        var response = this.http.post(this.endpoint_url+'/usercoininr/sendBCH',sendstxdetails).map(res => res.json());
+        var response = this.http.post(this.endpoint_url+'/usercoin/sendBCH',sendstxdetails).map(res => res.json());
       
         return response;
 
@@ -213,7 +221,7 @@ export class SetupService {
     }
     //sent Otp To Email Verificatation
      EmailVerifyforAccount(email:any){
-       console.log("email = = "+JSON.stringify(email));
+       //console.log("email = = "+JSON.stringify(email));
           var response =this.http.post(this.endpoint_url +'/user/sentOtpToEmailVerificatation',email).map(res =>res.json());
           return response;
        }

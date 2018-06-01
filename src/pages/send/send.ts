@@ -19,6 +19,7 @@ import { NgForm } from '@angular/forms';
 })
 export class SendPage {
   responseData:any;
+
   user:any;
   email:any;
 
@@ -49,7 +50,7 @@ onsendBalance(Form: NgForm){
   this.senddetails.userMailId=this.email;
   this.submitted = true;
   if (Form.valid) {
-       //this.userData.send(this.send.amount);
+       //this.userData.(this.send.amount);
        let loading = this.loadingCtrl.create({
       content: 'transaction is procced...'
      });
