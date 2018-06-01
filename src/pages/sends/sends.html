@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-navbar>
+     <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>SendSTX</ion-title>
+  </ion-navbar>
+ </ion-header>
+<ion-content>
+<form #stxForm="ngForm" novalidate>
+    <ion-list no-lines class="form-input-fields">
+  <br /><br /><br /><br /><br />
+
+    <ion-item>
+      <ion-input [(ngModel)]="sendstxdetails.amount" placeholder="Enter Amount" name="amount" type="text" #amount="ngModel" spellcheck="false" autocapitalize="off" class="login-input"
+          required>
+        </ion-input>
+      </ion-item>
+
+      <p ion-text [hidden]="amount.valid || submitted == false" color="danger" padding-left>
+       Amount is Required
+      </p>
+
+      <ion-item>
+
+        <ion-input [(ngModel)]="sendstxdetails.address" placeholder="Enter Address" name="address" type="text" #address="ngModel" spellcheck="false" autocapitalize="off" class="login-input"
+          required>
+        </ion-input>
+      </ion-item>
+      <p ion-text [hidden]="address.valid || submitted == false" color="danger" padding-left>
+        Address is Required
+      </p>
+
+      <ion-item>
+        <ion-input [(ngModel)]="sendstxdetails.spendingPassword" placeholder="Enter Spending Password" name="spendingPassword" type="password" #spendingPassword="ngModel" required class="login-input" >
+        </ion-input>
+      </ion-item>
+      <p ion-text [hidden]="spendingPassword.valid || submitted == false" color="danger" padding-left>
+        Spending Password is Required
+      </p>
+
+      <ion-row responsive-sm>
+        <ion-col >
+          <button class="button-backcolor" ion-button (click)="onsendstxBalance(stxForm)" type="submit" block>Send</button>
+          <!-- <button class="button-backcolor" ion-button (click)="onsendBalance1(sForm)" type="submit" block>Resset</button> -->
+        </ion-col>
+      </ion-row>
+      <hr>
+
+    </ion-list>
+
+
+  </form>
+</ion-content>
