@@ -58,9 +58,7 @@
 .toolbar-background{
     background: #3b4354 !important;
 }
-.blue-color .toolbar-background{
-  background-color: #2f7fc1!important;
-}
+
 .sidemenu-item{
   background: none;
   border-bottom: none !important;
@@ -95,4 +93,10 @@ margin-right: auto;
 }
 .padding0{
   padding: 0 !important;
+}
+.top-balance {
+  position: absolute; 
+  top: 56px; 
+  left: 0px; 
+  width: 100%;
 }

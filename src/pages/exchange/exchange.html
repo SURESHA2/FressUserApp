@@ -1,5 +1,5 @@
-<!--
-  Generated template for the ExchangePage page.
+
+ <-- Generated template for the ExchangePage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -14,9 +14,144 @@
     <ion-title>Exchange</ion-title>
   </ion-navbar>
 
-</ion-header>
 
 
-<button class = "button icon icon-left ion-home">
-   Home
-</button>
+<!-- <ion-row>
+      <ion-col col-4>
+          <button class="button-backcolor" ion-button type="submit" block (click)="Recievefn(ExchangePage)">
+           <ion-icon name='md-arrow-round-down'></ion-icon>
+          Recieve</button>
+           </ion-col>
+
+      <ion-col col-4>
+          <button class="button-backcolor" ion-button type="submit" block (click)="Exchangefn(ExchangePage)">
+           <ion-icon name='md-repeat'></ion-icon>
+          Exchange</button>
+           </ion-col>
+
+      <ion-col col-4>
+          <button class="button-backcolor" ion-button type="submit" block (click)="Sendfn(ExchangePage)">
+           <ion-icon name='md-arrow-round-up'></ion-icon>
+          Send</button>
+           </ion-col>
+         </ion-row> -->
+<!--  <ion-row>
+  <ion-col width-50 class="left">
+    <div class="header">First Bucket</div>
+    <ion-list [dragula]='"my-bag"'>
+      <button ion-item>
+        1
+      </button>
+      <button ion-item>
+        2
+      </button>
+      <button ion-item>
+        3
+      </button>
+    </ion-list>
+  </ion-col>
+
+  <ion-col width-50 class="right">
+    <div class="header">Second Bucket</div>
+    <ion-list [dragula]='"my-bag"'>
+      <button ion-item>
+        4
+      </button>
+      <button ion-item>
+        5
+      </button>
+      <button ion-item>
+        6
+      </button>
+    </ion-list>
+  </ion-col>
+</ion-row> -->
+
+
+<ion-toolbar no-border-top>
+<ion-segment [(ngModel)]="Exchange">
+      <ion-segment-button value="Page" style="border-radius: 25px; margin: 10px; background: #fff; color: #000;">
+        <ion-icon name='md-arrow-round-down'></ion-icon>Recieve </ion-segment-button>
+      <ion-segment-button value="Exchange" style="border-radius: 25px; margin: 3px; background: #fff; color: #000;">
+        <ion-icon name='md-swap'></ion-icon> Exchange</ion-segment-button>
+      <ion-segment-button value="Send" style="border-radius: 25px; margin: 10px; background: #fff; color: #000;"> 
+        <ion-icon name='md-arrow-round-up'></ion-icon>Send</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  </ion-header>
+<ion-content>
+  <div [ngSwitch]="Exchange">
+    <ion-list *ngSwitchCase="'Page'">
+      <ion-item>
+       <ion-icon item-left name="ios-flash"></ion-icon>
+       <ion-input type="text" placeholder="Enater Amount"></ion-input>
+       <ion-icon item-right name="Genrate" (click)="pickContactNo()"></ion-icon> 
+       </ion-item>
+        <ion-item>
+        <p align="center">Your Current Bitcoin Address:</p>
+       <img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl='++'"  alt="QR Code" style="width: 30%;" align="right" >
+      </ion-item>
+      <ion-item>
+      <h3>$BTC</h3>
+      </ion-item>
+      <ion-item>
+        <h3 align="center">Transaction History</h3>
+      </ion-item>
+        
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'Exchange'">
+      <ion-item>
+       
+
+
+      </ion-item>
+      <ion-item>
+       <ion-icon item-left name="ios-flash"></ion-icon>
+       <ion-input type="text" placeholder="Enater Amount"></ion-input>
+       <!-- <button item-right name="Send" ><button>  -->
+       </ion-item>
+        <ion-item>
+        <p align="center">Your Current Bitcoin Address:</p>
+       <img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl='++'"  alt="QR Code" style="width: 30%;" align="right" >
+      </ion-item>
+      <ion-item>
+      <h3>$BTC</h3>
+      </ion-item>
+      <ion-item>
+        <h3 align="center">Transaction History</h3>
+      </ion-item>
+      <ion-item>
+       
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'Send'">
+    <ion-item>
+         <ion-icon item-left name=""></ion-icon> 
+       <ion-input align="center" type="text" placeholder="Enater Recieving Address"></ion-input>
+       <ion-icon item-right name="Genrate" (click)="pickContactNo()"></ion-icon> 
+      </ion-item>
+      <ion-item>
+       <ion-icon item-left name="ios-flash"></ion-icon>
+       <ion-input type="text" placeholder="Enater Amount"></ion-input>
+       <ion-icon item-right name="Genrate" (click)="pickContactNo()"></ion-icon> 
+       </ion-item>
+        <ion-item>
+        <p align="center">Your Current Bitcoin Address:</p>
+       <img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl='++'"  alt="QR Code" style="width: 30%;" align="right" >
+      </ion-item>
+      <ion-item>
+      <h3>$BTC</h3>
+      </ion-item>
+      <ion-item>
+        <h3 align="center">Transaction History</h3>
+      </ion-item>
+      <ion-item>
+       
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
+  
+   

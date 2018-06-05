@@ -171,14 +171,44 @@ userdata(){
    
     //For stx address
      getStxAddress(){
-     this.setupService.createstxAddressDetail({email:this.userEmail.email}).subscribe((result) => {
+   console.log("calling<<<<<<<",this.stxaddress)
+   if(this.stxaddress=="undefined" || this.stxaddress==undefined){
+     console.log("this.user---------------------------------------",this.userEmail.email)
+      this.setupService.createstxAddressDetail({userMailId:this.userEmail.email}).subscribe((result) => {
         this.stxaddress = result.newaddress;
+    console.log("result..............................",result)
+    if(result.statusCode>200)
+    {
+      console.log("lets get address from db")
+       this.setupService.getstxDetail({userMailId:this.userEmail.email}).subscribe((result) => {
+        this.stxaddress = result.user.userSTXAddress;
+      console.log("111111111111111",this.stxaddress)
+        return this.stxaddress;
 
-         return this.stxaddress;
-
-    });
-
+        });
     }
+    else
+      return this.stxaddress;
+    });
+    }
+  
+     
+    
+     // console.log("11111111111111",result)
+     //    if(this.address)
+     //    return this.address;
+      else
+     {
+       this.setupService.getstxDetail({userMailId:this.userEmail.email}).subscribe((result) => {
+        this.stxaddress = result.newaddress;
+      // console.log("22222222222",result)
+        return this.stxaddress;
+
+        });
+      }
+  
+}
+    
      getTx(){
       this.setupService.createTransactionDetail({userMailId:this.userEmail.email}).subscribe((result) => {
         if(result.statusCode==200){
@@ -248,7 +278,7 @@ openSendPage() {
   }
 
   showStxConfirm(){
-   var stxAddress= this.Address;
+   var stxAddress= this.stxaddress;
 
   let alert = this.alertCtrl.create({
      title: '<div class="center" >My BTC Address</div>',

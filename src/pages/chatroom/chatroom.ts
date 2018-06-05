@@ -5,6 +5,9 @@ import { SetupService } from '../../providers/setup.services';
 import   *as socketIOClient  from 'socket.io-client';
 import *as sailsIOClient  from 'sails.io.js';
 import { UserEmailId } from '../../interfaces/user-options';
+import { ExchangePage } from '../exchange/exchange';
+import {  FabContainer } from 'ionic-angular';
+
 
 
 @IonicPage()
@@ -37,8 +40,8 @@ export class ChatroomPage {
     public events: Events
     ) {
   //this.io.sails.url = this._setupService.endpoint_url;    // connect to socket
-      this.io.sails.url = "http://192.168.0.125:3000"; 
-     //this.io.sails.url = "http://localhost:3000";
+     this.io.sails.url = "http://192.168.0.133:3000"; 
+    // this.io.sails.url = "http://localhost:3000";
   this.userdata();
 
     this.messageDetails.sender=this.UserId.email;
@@ -115,5 +118,15 @@ export class ChatroomPage {
    this.io.socket.disconnect();
    delete this.io.sails;
   }
+
+   openFilters() {
+        console.log('crap');
+    }
+
+    gotoExchange(event, fab: FabContainer) {
+    fab.close();
+    this.navCtrl.push(ExchangePage);
+  }
+
 
 }

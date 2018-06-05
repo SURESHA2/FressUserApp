@@ -28,6 +28,8 @@ import { SendsPage } from '../pages/sends/sends';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Clipboard } from '@ionic-native/clipboard';
+// import { DragulaModule } from 'ng2-dragula';
+
 
 @NgModule({
   declarations: [
@@ -65,13 +67,14 @@ import { Clipboard } from '@ionic-native/clipboard';
         { component: ChatuserlistPage, name: 'ChatuserlistPage', segment: 'Chatuserlist' },
         { component: WalletPage, name: 'WalletPage', segment: 'wallet' },
         { component: ChatroomPage, name: 'ChatroomPage', segment: 'chatroom' },
-        { component: ExchangePage, name: 'ExchangePage', segment: 'exchange' },      
+       // { component: ExchangePage, name: 'ExchangePage', segment: 'exchange' },      
         { component: SettingPage, name: 'SettingsPage', segment: 'setting' },      
         { component: GmapPage, name: 'Gmap', segment: 'gmap' },       
       ]
     }),
     IonicStorageModule.forRoot(),
-   NgxQRCodeModule
+   NgxQRCodeModule,
+   // DragulaModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -14,14 +14,14 @@
 </ion-header>
 
 <br><br>
-  <ion-toolbar class="blue-color" >
+  <ion-toolbar class="blue-color top-balance">
     <ion-segment [(ngModel)]="wallet">
 
-      <ion-segment-button value="btcpage">
+      <ion-segment-button value="btcpage" style="border-radius: 25px; margin: 10px; background: #fff; color: #000;">
       BTC 
       </ion-segment-button>
 
-      <ion-segment-button value="stxpage">
+      <ion-segment-button value="stxpage" style="border-radius: 25px; margin: 10px; background: #fff; color: #000;">
       STX
       </ion-segment-button>
     </ion-segment>
@@ -113,7 +113,7 @@
            <ion-grid>
             <ion-row *ngFor="let item of tx">
              <ion-col>
-                {{item.time | date : 'dd-MM-yyyy hh:mm:ss'}}
+                {{item.time | date : 'dd-MM-yy hh:mm:ss'}}
                 </ion-col>
               <ion-col>
                 {{item.amount}}

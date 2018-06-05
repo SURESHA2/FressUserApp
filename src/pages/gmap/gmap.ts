@@ -3,7 +3,7 @@ import {  NavController,Platform, LoadingController,Events ,ToastController} fro
 import { Component, ElementRef,  NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Markers,ChatRequest,TrderinfoGet,updateValue } from '../../interfaces/user-options';
-import { } from 'googlemaps';
+import {  } from 'googlemaps';
 import { SetupService } from '../../providers/setup.services';
 import { Storage } from '@ionic/storage';
 //import { UserData } from '../../providers/user-data';
@@ -70,8 +70,8 @@ export class GmapPage implements OnInit{
     private ngZone: NgZone )
    {
           
-          this.io.sails.url = "http://192.168.0.125:3000";  
-           //this.io.sails.url = "http://localhost:3000";    
+          this.io.sails.url = "http://192.168.0.133:3000";  
+          //this.io.sails.url = "http://localhost:3000";    
       this.data=false;
       this.userdata();
       if ("geolocation" in navigator) {
@@ -80,6 +80,7 @@ export class GmapPage implements OnInit{
         this.longitude = position.coords.longitude;
         this.zoom = 16;
       });
+
       let backAction =  platform.registerBackButtonAction(() => {
         this.navCtrl.pop();
         backAction();

@@ -48,7 +48,7 @@ onsendstxBalance(Form: NgForm){
   this.sendstxdetails.userMailId=this.email;
   this.submitted = true;
   if (Form.valid) {
-       //this.userData.send(this.send.amount);
+       this.userData.send(this.send.amount);
        let loading = this.loadingCtrl.create({
       content: 'transaction is procced...'
      });

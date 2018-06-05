@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class UserData {
   _favorites: string[] = [];
+  HAS_SENDDED_IN = 'hasSenddedIn';
   HAS_LOGGED_IN = 'hasLoggedIn';
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 
@@ -34,6 +35,28 @@ export class UserData {
     this.storage.set(this.HAS_LOGGED_IN, true);
     this.setUsername(username);
     this.events.publish('user:login');
+  };
+
+  send(address: string): void {
+    this.storage.set(this.HAS_SENDDED_IN, true);
+    this.setSubject(address);
+    this.events.publish('address:send');
+  };
+
+  setSubject(subject: string): void {
+    this.storage.set('subject', subject);
+  };
+  setCoin(coin: string): void {
+    this.storage.set('coin', coin);
+  };
+   setsend(send: string): void {
+    this.storage.set('send', send);
+  };
+
+  hasSenddedIn(): Promise<boolean> {
+    return this.storage.get(this.HAS_SENDDED_IN).then((value) => {
+      return value === true;
+    });
   };
 
   signup(username: string): void {

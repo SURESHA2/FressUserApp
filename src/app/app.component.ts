@@ -41,7 +41,7 @@ export class ConferenceApp {
     { title: 'FindTrader', name: 'GmapPage', component: GmapPage, icon: 'md-pin' },
     { title: 'Wallet', name: 'WalletPage', component: WalletPage, icon: 'md-folder' },
     { title: 'Chat', name: 'ChatuserlistPage', component: ChatuserlistPage, icon: 'chatbubbles' },
-    { title: 'Exchange', name: 'ExchangePage', component: ExchangePage, icon: 'md-swap' },
+   // { title: 'Exchange', name: 'ExchangePage', component: ExchangePage, icon: 'md-swap' },
     { title: 'Settings', name: 'SettingsPage', component: SettingPage, icon: 'settings' },
     { title: 'Logout', name: null, component: null, icon: 'log-out',logsOut: true }
    

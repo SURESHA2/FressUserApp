@@ -17,8 +17,8 @@ export class SetupService {
   }
 
       
-       endpoint_url : string = 'http://192.168.0.125:3000';
-        //endpoint_url : string = 'http://localhost:3000';
+       endpoint_url : string = 'http://192.168.0.133:3000';
+       //endpoint_url : string = 'http://localhost:3000';
 
    //create new user account
     createUserAccount(SignUpDetail: any) {
@@ -68,7 +68,13 @@ export class SetupService {
     //For Stx Address details
     createstxAddressDetail(email:any) {   
          
-        var response = this.http.post(this.endpoint_url+'/usercoin/getNewBCHAddress',email ).map(res => res.json());
+        var response = this.http.post(this.endpoint_url+'/usercoininr/getNewBCHAddress',email ).map(res => res.json());
+        return response;
+    }
+
+     getstxDetail(email:any) {   
+         
+        var response = this.http.post(this.endpoint_url+'/usercoininr/getuserdetails',email ).map(res => res.json());
         return response;
     }
     // for Transaction details
@@ -80,7 +86,7 @@ export class SetupService {
       //For Stx Transaction Details
     createstxTransactionDetail(email:any) {   
          
-        var response = this.http.post(this.endpoint_url+'/usercoin/getTxsListBCH',email ).map(res => res.json());
+        var response = this.http.post(this.endpoint_url+'/usercoininr/getTxsListBCH',email ).map(res => res.json());
         return response;
     }
      // for send page
@@ -94,7 +100,7 @@ export class SetupService {
     //For sendStx details
      createstxSendDetail(sendstxdetails:any) {   
          
-        var response = this.http.post(this.endpoint_url+'/usercoin/sendBCH',sendstxdetails).map(res => res.json());
+        var response = this.http.post(this.endpoint_url+'/usercoininr/sendBCH',sendstxdetails).map(res => res.json());
       
         return response;
 

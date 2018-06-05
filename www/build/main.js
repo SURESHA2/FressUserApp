@@ -9,7 +9,7 @@ webpackJsonp([0],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login_login__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__signup_signup__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__changepassword_changepassword__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__changepassword_changepassword__ = __webpack_require__(257);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_setup_services__ = __webpack_require__(14);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -297,7 +297,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var SetupService = (function () {
     function SetupService(http) {
         this.http = http;
-        this.endpoint_url = 'http://192.168.0.125:3000';
+        this.endpoint_url = 'http://192.168.0.133:3000';
         this.http = http;
         // console.log('Hello ServicesProvider Provider');
     }
@@ -339,7 +339,11 @@ var SetupService = (function () {
     };
     //For Stx Address details
     SetupService.prototype.createstxAddressDetail = function (email) {
-        var response = this.http.post(this.endpoint_url + '/usercoin/getNewBCHAddress', email).map(function (res) { return res.json(); });
+        var response = this.http.post(this.endpoint_url + '/usercoininr/getNewBCHAddress', email).map(function (res) { return res.json(); });
+        return response;
+    };
+    SetupService.prototype.getstxDetail = function (email) {
+        var response = this.http.post(this.endpoint_url + '/usercoininr/getuserdetails', email).map(function (res) { return res.json(); });
         return response;
     };
     // for Transaction details
@@ -349,7 +353,7 @@ var SetupService = (function () {
     };
     //For Stx Transaction Details
     SetupService.prototype.createstxTransactionDetail = function (email) {
-        var response = this.http.post(this.endpoint_url + '/usercoin/getTxsListBCH', email).map(function (res) { return res.json(); });
+        var response = this.http.post(this.endpoint_url + '/usercoininr/getTxsListBCH', email).map(function (res) { return res.json(); });
         return response;
     };
     // for send page
@@ -359,7 +363,7 @@ var SetupService = (function () {
     };
     //For sendStx details
     SetupService.prototype.createstxSendDetail = function (sendstxdetails) {
-        var response = this.http.post(this.endpoint_url + '/usercoin/sendBCH', sendstxdetails).map(function (res) { return res.json(); });
+        var response = this.http.post(this.endpoint_url + '/usercoininr/sendBCH', sendstxdetails).map(function (res) { return res.json(); });
         return response;
     };
     //get all traders list
@@ -466,10 +470,9 @@ var SetupService = (function () {
     };
     SetupService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
     ], SetupService);
     return SetupService;
-    var _a;
 }());
 
 //# sourceMappingURL=setup.services.js.map
@@ -535,6 +538,7 @@ var UserData = (function () {
         this.events = events;
         this.storage = storage;
         this._favorites = [];
+        this.HAS_SENDDED_IN = 'hasSenddedIn';
         this.HAS_LOGGED_IN = 'hasLoggedIn';
         this.HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
     }
@@ -557,6 +561,30 @@ var UserData = (function () {
         this.storage.set(this.HAS_LOGGED_IN, true);
         this.setUsername(username);
         this.events.publish('user:login');
+    };
+    ;
+    UserData.prototype.send = function (address) {
+        this.storage.set(this.HAS_SENDDED_IN, true);
+        this.setSubject(address);
+        this.events.publish('address:send');
+    };
+    ;
+    UserData.prototype.setSubject = function (subject) {
+        this.storage.set('subject', subject);
+    };
+    ;
+    UserData.prototype.setCoin = function (coin) {
+        this.storage.set('coin', coin);
+    };
+    ;
+    UserData.prototype.setsend = function (send) {
+        this.storage.set('send', send);
+    };
+    ;
+    UserData.prototype.hasSenddedIn = function () {
+        return this.storage.get(this.HAS_SENDDED_IN).then(function (value) {
+            return value === true;
+        });
     };
     ;
     UserData.prototype.signup = function (username) {
@@ -782,6 +810,7 @@ var TutorialPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_socket_io_client__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_sails_io_js__ = __webpack_require__(254);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_sails_io_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_sails_io_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__exchange_exchange__ = __webpack_require__(256);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -791,6 +820,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -816,8 +846,8 @@ var ChatroomPage = (function () {
         this.myInfo = this.messages[0];
         this.UserId = { email: '' };
         //this.io.sails.url = this._setupService.endpoint_url;    // connect to socket
-        this.io.sails.url = "http://192.168.0.125:3000";
-        //this.io.sails.url = "http://localhost:3000";
+        this.io.sails.url = "http://192.168.0.133:3000";
+        // this.io.sails.url = "http://localhost:3000";
         this.userdata();
         this.messageDetails.sender = this.UserId.email;
         this.nickname = this.messageDetails.sender;
@@ -874,9 +904,16 @@ var ChatroomPage = (function () {
         this.io.socket.disconnect();
         delete this.io.sails;
     };
+    ChatroomPage.prototype.openFilters = function () {
+        console.log('crap');
+    };
+    ChatroomPage.prototype.gotoExchange = function (event, fab) {
+        fab.close();
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__exchange_exchange__["a" /* ExchangePage */]);
+    };
     ChatroomPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-chat-room',template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\chatroom\chatroom.html"*/'\n\n\n\n<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>{{messageDetails.recipient}}</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-grid>\n\n    <ion-row *ngFor="let message of messages "> \n\n \n\n\n\n\n\n      <ion-col offset-3 col-9 *ngIf="message.sender !== nickname" class="message" [ngClass]="{\'my_message\': message.sender === nickname, \'other_message\': message.sender !== nickname}">\n\n        <span class="user_name">{{ message.sender }}</span><br>\n\n        <span>{{ message.content }}</span>\n\n      <div class="time">{{message.createdAt | date:\'hh:MM\'}}</div> \n\n      </ion-col>\n\n      <ion-col col-9 *ngIf="message.sender === nickname" class="message" [ngClass]="{\'my_message\': message.sender === nickname, \'other_message\': message.sender !== nickname}">\n\n        <span class="user_name">{{ message.sender }}</span><br>\n\n        <span>{{ message.content }}</span>\n\n   <div class="time">{{message.createdAt | date:\'hh:MM\'}}</div>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n</ion-content>\n\n\n\n<ion-footer>\n\n  <ion-toolbar>\n\n    <ion-row class="message_row">\n\n      <ion-col col-9>\n\n        <ion-item no-lines>\n\n          <ion-input type="text" placeholder="type your message here..." [(ngModel)]="userContent"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n      <ion-col col-3>\n\n        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="userContent ==\'\'">\n\n        Send\n\n      </button>\n\n      <ion-fab center middle>\n\n     <button ion-fab color="primary"><ion-icon name="repeat"></ion-icon></button>\n\n     <ion-fab-list side="top">\n\n       <button ion-fab color="primary"><ion-icon name="link"></ion-icon></button>\n\n       <button ion-fab color="primary"><ion-icon name="logo-googleplus"></ion-icon></button>\n\n       </ion-fab-list>\n\n</ion-fab>\n\n   \n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-toolbar>\n\n</ion-footer>'/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\chatroom\chatroom.html"*/,
+            selector: 'page-chat-room',template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\chatroom\chatroom.html"*/'\n\n\n\n<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>{{messageDetails.recipient}}</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-grid>\n\n    <ion-row *ngFor="let message of messages "> \n\n \n\n\n\n\n\n      <ion-col offset-3 col-9 *ngIf="message.sender !== nickname" class="message" [ngClass]="{\'my_message\': message.sender === nickname, \'other_message\': message.sender !== nickname}">\n\n        <span class="user_name">{{ message.sender }}</span><br>\n\n        <span>{{ message.content }}</span>\n\n      <div class="time">{{message.createdAt | date:\'hh:MM\'}}</div> \n\n      </ion-col>\n\n      <ion-col col-9 *ngIf="message.sender === nickname" class="message" [ngClass]="{\'my_message\': message.sender === nickname, \'other_message\': message.sender !== nickname}">\n\n        <span class="user_name">{{ message.sender }}</span><br>\n\n        <span>{{ message.content }}</span>\n\n   <div class="time">{{message.createdAt | date:\'hh:MM\'}}</div>\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n  \n\n   <ion-fab right bottom #fab>\n\n     <button ion-fab color="primary"(click)="gotoExchange($event, fab)">\n\n      <ion-icon name="md-repeat" ></ion-icon>\n\n    </button>\n\n</ion-fab>\n\n\n\n</ion-content>\n\n\n\n<ion-footer>\n\n  <ion-toolbar>\n\n    <ion-row class="message_row">\n\n      <ion-col col-9>\n\n        <ion-item no-lines>\n\n          <ion-input type="text" placeholder="type your message here..." [(ngModel)]="userContent"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n\n\n      <ion-col col-3>\n\n        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="userContent ==\'\'">\n\n        Send\n\n      </button>\n\n     \n\n   \n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-toolbar>\n\n</ion-footer>'/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\chatroom\chatroom.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */],
@@ -893,6 +930,61 @@ var ChatroomPage = (function () {
 /***/ }),
 
 /***/ 256:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExchangePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+// import { DragulaService } from 'ng2-dragula/ng2-dragula';
+/**
+ * Generated class for the ExchangePage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var ExchangePage = (function () {
+    function ExchangePage(navCtrl, navParams, platform) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.platform = platform;
+        this.Exchange = "Page";
+        this.isAndroid = false;
+        // this.dragula.setOptions('bag-items',{
+        //    revertOnSpil:true
+        //  });
+        this.isAndroid = platform.is('android');
+    }
+    ExchangePage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ExchangePage');
+    };
+    ExchangePage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-exchange',template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\exchange\exchange.html"*/'\n\n <-- Generated template for the ExchangePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n  	 <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Exchange</ion-title>\n\n  </ion-navbar>\n\n\n\n\n\n\n\n<!-- <ion-row>\n\n      <ion-col col-4>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="Recievefn(ExchangePage)">\n\n           <ion-icon name=\'md-arrow-round-down\'></ion-icon>\n\n          Recieve</button>\n\n           </ion-col>\n\n\n\n      <ion-col col-4>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="Exchangefn(ExchangePage)">\n\n           <ion-icon name=\'md-repeat\'></ion-icon>\n\n          Exchange</button>\n\n           </ion-col>\n\n\n\n      <ion-col col-4>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="Sendfn(ExchangePage)">\n\n           <ion-icon name=\'md-arrow-round-up\'></ion-icon>\n\n          Send</button>\n\n           </ion-col>\n\n         </ion-row> -->\n\n<!--  <ion-row>\n\n  <ion-col width-50 class="left">\n\n    <div class="header">First Bucket</div>\n\n    <ion-list [dragula]=\'"my-bag"\'>\n\n      <button ion-item>\n\n        1\n\n      </button>\n\n      <button ion-item>\n\n        2\n\n      </button>\n\n      <button ion-item>\n\n        3\n\n      </button>\n\n    </ion-list>\n\n  </ion-col>\n\n\n\n  <ion-col width-50 class="right">\n\n    <div class="header">Second Bucket</div>\n\n    <ion-list [dragula]=\'"my-bag"\'>\n\n      <button ion-item>\n\n        4\n\n      </button>\n\n      <button ion-item>\n\n        5\n\n      </button>\n\n      <button ion-item>\n\n        6\n\n      </button>\n\n    </ion-list>\n\n  </ion-col>\n\n</ion-row> -->\n\n\n\n\n\n<ion-toolbar no-border-top>\n\n<ion-segment [(ngModel)]="Exchange">\n\n      <ion-segment-button value="Page" style="border-radius: 25px; margin: 10px; background: #fff; color: #000;">\n\n        <ion-icon name=\'md-arrow-round-down\'></ion-icon>Recieve </ion-segment-button>\n\n      <ion-segment-button value="Exchange" style="border-radius: 25px; margin: 3px; background: #fff; color: #000;">\n\n        <ion-icon name=\'md-swap\'></ion-icon> Exchange</ion-segment-button>\n\n      <ion-segment-button value="Send" style="border-radius: 25px; margin: 10px; background: #fff; color: #000;"> \n\n        <ion-icon name=\'md-arrow-round-up\'></ion-icon>Send</ion-segment-button>\n\n    </ion-segment>\n\n  </ion-toolbar>\n\n  </ion-header>\n\n<ion-content>\n\n  <div [ngSwitch]="Exchange">\n\n    <ion-list *ngSwitchCase="\'Page\'">\n\n      <ion-item>\n\n       <ion-icon item-left name="ios-flash"></ion-icon>\n\n       <ion-input type="text" placeholder="Enater Amount"></ion-input>\n\n       <ion-icon item-right name="Genrate" (click)="pickContactNo()"></ion-icon> \n\n       </ion-item>\n\n        <ion-item>\n\n        <p align="center">Your Current Bitcoin Address:</p>\n\n       <img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=\'++\'"  alt="QR Code" style="width: 30%;" align="right" >\n\n      </ion-item>\n\n      <ion-item>\n\n      <h3>$BTC</h3>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h3 align="center">Transaction History</h3>\n\n      </ion-item>\n\n        \n\n    </ion-list>\n\n\n\n    <ion-list *ngSwitchCase="\'Exchange\'">\n\n      <ion-item>\n\n       \n\n\n\n\n\n      </ion-item>\n\n      <ion-item>\n\n       <ion-icon item-left name="ios-flash"></ion-icon>\n\n       <ion-input type="text" placeholder="Enater Amount"></ion-input>\n\n       <!-- <button item-right name="Send" ><button>  -->\n\n       </ion-item>\n\n        <ion-item>\n\n        <p align="center">Your Current Bitcoin Address:</p>\n\n       <img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=\'++\'"  alt="QR Code" style="width: 30%;" align="right" >\n\n      </ion-item>\n\n      <ion-item>\n\n      <h3>$BTC</h3>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h3 align="center">Transaction History</h3>\n\n      </ion-item>\n\n      <ion-item>\n\n       \n\n      </ion-item>\n\n    </ion-list>\n\n\n\n    <ion-list *ngSwitchCase="\'Send\'">\n\n    <ion-item>\n\n         <ion-icon item-left name=""></ion-icon> \n\n       <ion-input align="center" type="text" placeholder="Enater Recieving Address"></ion-input>\n\n       <ion-icon item-right name="Genrate" (click)="pickContactNo()"></ion-icon> \n\n      </ion-item>\n\n      <ion-item>\n\n       <ion-icon item-left name="ios-flash"></ion-icon>\n\n       <ion-input type="text" placeholder="Enater Amount"></ion-input>\n\n       <ion-icon item-right name="Genrate" (click)="pickContactNo()"></ion-icon> \n\n       </ion-item>\n\n        <ion-item>\n\n        <p align="center">Your Current Bitcoin Address:</p>\n\n       <img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=\'++\'"  alt="QR Code" style="width: 30%;" align="right" >\n\n      </ion-item>\n\n      <ion-item>\n\n      <h3>$BTC</h3>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h3 align="center">Transaction History</h3>\n\n      </ion-item>\n\n      <ion-item>\n\n       \n\n      </ion-item>\n\n    </ion-list>\n\n  </div>\n\n</ion-content>\n\n  \n\n   '/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\exchange\exchange.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]])
+    ], ExchangePage);
+    return ExchangePage;
+}());
+
+//# sourceMappingURL=exchange.js.map
+
+/***/ }),
+
+/***/ 257:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -994,7 +1086,7 @@ var ChangepasswordPage = (function () {
 
 /***/ }),
 
-/***/ 257:
+/***/ 258:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1208,7 +1300,7 @@ var SettingPage = (function () {
 
 /***/ }),
 
-/***/ 258:
+/***/ 259:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1374,54 +1466,6 @@ var ConferenceData = (function () {
 }());
 
 //# sourceMappingURL=conference-data.js.map
-
-/***/ }),
-
-/***/ 259:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExchangePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-/**
- * Generated class for the ExchangePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var ExchangePage = (function () {
-    function ExchangePage(navCtrl, navParams, platform) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.platform = platform;
-    }
-    ExchangePage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ExchangePage');
-    };
-    ExchangePage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-exchange',template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\exchange\exchange.html"*/'<!--\n\n  Generated template for the ExchangePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n  	 <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Exchange</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<button class = "button icon icon-left ion-home">\n\n   Home\n\n</button>'/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\exchange\exchange.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]])
-    ], ExchangePage);
-    return ExchangePage;
-}());
-
-//# sourceMappingURL=exchange.js.map
 
 /***/ }),
 
@@ -1595,10 +1639,31 @@ var WalletPage = (function () {
     //For stx address
     WalletPage.prototype.getStxAddress = function () {
         var _this = this;
-        this.setupService.createstxAddressDetail({ email: this.userEmail.email }).subscribe(function (result) {
-            _this.stxaddress = result.newaddress;
-            return _this.stxaddress;
-        });
+        console.log("calling<<<<<<<", this.stxaddress);
+        if (this.stxaddress == "undefined" || this.stxaddress == undefined) {
+            console.log("this.user---------------------------------------", this.userEmail.email);
+            this.setupService.createstxAddressDetail({ userMailId: this.userEmail.email }).subscribe(function (result) {
+                _this.stxaddress = result.newaddress;
+                console.log("result..............................", result);
+                if (result.statusCode > 200) {
+                    console.log("lets get address from db");
+                    _this.setupService.getstxDetail({ userMailId: _this.userEmail.email }).subscribe(function (result) {
+                        _this.stxaddress = result.user.userSTXAddress;
+                        console.log("111111111111111", _this.stxaddress);
+                        return _this.stxaddress;
+                    });
+                }
+                else
+                    return _this.stxaddress;
+            });
+        }
+        else {
+            this.setupService.getstxDetail({ userMailId: this.userEmail.email }).subscribe(function (result) {
+                _this.stxaddress = result.newaddress;
+                // console.log("22222222222",result)
+                return _this.stxaddress;
+            });
+        }
     };
     WalletPage.prototype.getTx = function () {
         var _this = this;
@@ -1667,7 +1732,7 @@ var WalletPage = (function () {
     };
     WalletPage.prototype.showStxConfirm = function () {
         var _this = this;
-        var stxAddress = this.Address;
+        var stxAddress = this.stxaddress;
         var alert = this.alertCtrl.create({
             title: '<div class="center" >My BTC Address</div>',
             subTitle: '<div class="center" (click)="copyAddress()"> <img src="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=' + stxAddress + '"  alt="QR Code" style="width: 80%;" ></div><div class="center">' + stxAddress + '<div>',
@@ -1701,7 +1766,7 @@ var WalletPage = (function () {
     };
     WalletPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-wallet',template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\wallet\wallet.html"*/'<!--\n\n  Generated template for the WalletPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n      <button ion-button menuToggle>\n\n         <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title>Wallet</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<br><br>\n\n  <ion-toolbar class="blue-color" >\n\n    <ion-segment [(ngModel)]="wallet">\n\n\n\n      <ion-segment-button value="btcpage">\n\n      BTC \n\n      </ion-segment-button>\n\n\n\n      <ion-segment-button value="stxpage">\n\n      STX\n\n      </ion-segment-button>\n\n    </ion-segment>\n\n  </ion-toolbar>\n\n\n\n\n\n    \n\n<!-- <ion-content padding>\n\n     <ion-list>\n\n         <h3 align="center">My Balance</h3>\n\n         <div>\n\n          <p align="center">{{balance}}</p>\n\n         </div>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="openSendPage(SendPage)">Send</button>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="doPrompt(send-amount)">Recieve</button>\n\n     </ion-list>\n\n           <h3 align="center">Transaction list</h3>\n\n           <ion-grid>\n\n             <ion-row>\n\n                <ion-col>\n\n                  Date\n\n                </ion-col>\n\n                <ion-col>\n\n                  Amount\n\n                </ion-col>\n\n                <ion-col>\n\n                  Transaction list\n\n                </ion-col>\n\n             </ion-row>\n\n           </ion-grid>\n\n\n\n           <ion-grid>\n\n            <ion-row *ngFor="let item of tx">\n\n              <ion-col>\n\n                {{item.time | date : \'shortDate\'}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{item.amount}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{(item.txid | slice:0:10)+".."}}\n\n              </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n</ion-content>\n\n -->\n\n\n\n\n\n\n\n\n\n <ion-content padding>\n\n        <form #pForm="ngForm" novalidate>\n\n           <ion-list no-lines class="form-input-fields">\n\n              <div [ngSwitch]="wallet" >\n\n                  <ion-list *ngSwitchCase="\'btcpage\'">\n\n                  <br><br><br><br> <br><br><br><br>\n\n                  <ion-list>\n\n         <h3 style="color: #3896ea;" align="center">Total BTC Balance</h3>\n\n         <div>\n\n          <p align="center">{{BCHbalance}}</p>\n\n         </div>\n\n         <ion-grid>\n\n         <ion-row>\n\n            <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="openSendPage(SendPage)">Send</button>\n\n          </ion-col>\n\n           <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="showConfirm()">Recieve</button>\n\n           </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n         <!--  <button class="button-backcolor" ion-button (click)="changeCurrentPassword(pForm)" type="submit" block>Save</button> -->\n\n     </ion-list>\n\n           <h3 style="color: #3896ea;" align="center">Transaction list</h3>\n\n           <ion-grid>\n\n             <ion-row>\n\n                <ion-col>\n\n                  Date\n\n                </ion-col>\n\n                <ion-col>\n\n                  Amount\n\n                </ion-col>\n\n                <ion-col>\n\n              Transaction id\n\n                </ion-col>\n\n             </ion-row>\n\n           </ion-grid>\n\n\n\n           <ion-grid>\n\n            <ion-row *ngFor="let item of tx">\n\n             <ion-col>\n\n                {{item.time | date : \'dd-MM-yyyy hh:mm:ss\'}}\n\n                </ion-col>\n\n              <ion-col>\n\n                {{item.amount}}\n\n              </ion-col>\n\n              <ion-col >\n\n                 {{(item.txid | slice:0:10)+".."}}\n\n              </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n                  \n\n                  </ion-list>\n\n              </div>\n\n          </ion-list>\n\n        </form>\n\n     \n\n       <form #psForm="ngForm" novalidate>\n\n          <ion-list no-lines class="form-input-fields">\n\n           <div [ngSwitch]="wallet"> \n\n             <ion-list *ngSwitchCase="\'stxpage\'">\n\n             <br><br><br><br> <br><br><br><br>\n\n              <ion-list>\n\n         <h3 align="center">Total STX Balance</h3>\n\n         <div>\n\n          <p align="center">{{stxbalance}}</p>\n\n         </div>\n\n         <ion-grid>\n\n         <ion-row>\n\n            <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="openSendsPage(SendsPage)">Send</button>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="showStxConfirm()">Recieve</button>\n\n           </ion-col>\n\n         </ion-row>\n\n       </ion-grid>\n\n           <!--  <button class="button-backcolor" ion-button (click)="changespendingPassword(psForm)" type="submit" block>Save</button> -->\n\n          \n\n     </ion-list>\n\n           <h3 align="center">Transaction list</h3>\n\n           <ion-grid>\n\n             <ion-row>\n\n                <ion-col>\n\n                  Date\n\n                </ion-col>\n\n                <ion-col>\n\n                  Amount\n\n                </ion-col>\n\n                <ion-col>\n\n                  Transaction id\n\n                </ion-col>\n\n             </ion-row>\n\n           </ion-grid>\n\n\n\n           <ion-grid>\n\n            <ion-row *ngFor="let item of stxtx">\n\n              <ion-col>\n\n               {{item.time | date : \'dd-MM-yyyy hh:mm:ss\'}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{item.amount}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{(item.txid | slice:0:10)+".."}}\n\n              </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n             </ion-list>\n\n           </div>\n\n          </ion-list>\n\n      </form>\n\n </ion-content>\n\n '/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\wallet\wallet.html"*/,
+            selector: 'page-wallet',template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\wallet\wallet.html"*/'<!--\n\n  Generated template for the WalletPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n      <button ion-button menuToggle>\n\n         <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title>Wallet</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<br><br>\n\n  <ion-toolbar class="blue-color top-balance">\n\n    <ion-segment [(ngModel)]="wallet">\n\n\n\n      <ion-segment-button value="btcpage" style="border-radius: 25px; margin: 10px; background: #fff; color: #000;">\n\n      BTC \n\n      </ion-segment-button>\n\n\n\n      <ion-segment-button value="stxpage" style="border-radius: 25px; margin: 10px; background: #fff; color: #000;">\n\n      STX\n\n      </ion-segment-button>\n\n    </ion-segment>\n\n  </ion-toolbar>\n\n\n\n\n\n    \n\n<!-- <ion-content padding>\n\n     <ion-list>\n\n         <h3 align="center">My Balance</h3>\n\n         <div>\n\n          <p align="center">{{balance}}</p>\n\n         </div>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="openSendPage(SendPage)">Send</button>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="doPrompt(send-amount)">Recieve</button>\n\n     </ion-list>\n\n           <h3 align="center">Transaction list</h3>\n\n           <ion-grid>\n\n             <ion-row>\n\n                <ion-col>\n\n                  Date\n\n                </ion-col>\n\n                <ion-col>\n\n                  Amount\n\n                </ion-col>\n\n                <ion-col>\n\n                  Transaction list\n\n                </ion-col>\n\n             </ion-row>\n\n           </ion-grid>\n\n\n\n           <ion-grid>\n\n            <ion-row *ngFor="let item of tx">\n\n              <ion-col>\n\n                {{item.time | date : \'shortDate\'}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{item.amount}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{(item.txid | slice:0:10)+".."}}\n\n              </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n</ion-content>\n\n -->\n\n\n\n\n\n\n\n\n\n <ion-content padding>\n\n        <form #pForm="ngForm" novalidate>\n\n           <ion-list no-lines class="form-input-fields">\n\n              <div [ngSwitch]="wallet" >\n\n                  <ion-list *ngSwitchCase="\'btcpage\'">\n\n                  <br><br><br><br> <br><br><br><br>\n\n                  <ion-list>\n\n         <h3 style="color: #3896ea;" align="center">Total BTC Balance</h3>\n\n         <div>\n\n          <p align="center">{{BCHbalance}}</p>\n\n         </div>\n\n         <ion-grid>\n\n         <ion-row>\n\n            <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="openSendPage(SendPage)">Send</button>\n\n          </ion-col>\n\n           <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="showConfirm()">Recieve</button>\n\n           </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n         <!--  <button class="button-backcolor" ion-button (click)="changeCurrentPassword(pForm)" type="submit" block>Save</button> -->\n\n     </ion-list>\n\n           <h3 style="color: #3896ea;" align="center">Transaction list</h3>\n\n           <ion-grid>\n\n             <ion-row>\n\n                <ion-col>\n\n                  Date\n\n                </ion-col>\n\n                <ion-col>\n\n                  Amount\n\n                </ion-col>\n\n                <ion-col>\n\n              Transaction id\n\n                </ion-col>\n\n             </ion-row>\n\n           </ion-grid>\n\n\n\n           <ion-grid>\n\n            <ion-row *ngFor="let item of tx">\n\n             <ion-col>\n\n                {{item.time | date : \'dd-MM-yy hh:mm:ss\'}}\n\n                </ion-col>\n\n              <ion-col>\n\n                {{item.amount}}\n\n              </ion-col>\n\n              <ion-col >\n\n                 {{(item.txid | slice:0:10)+".."}}\n\n              </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n                  \n\n                  </ion-list>\n\n              </div>\n\n          </ion-list>\n\n        </form>\n\n     \n\n       <form #psForm="ngForm" novalidate>\n\n          <ion-list no-lines class="form-input-fields">\n\n           <div [ngSwitch]="wallet"> \n\n             <ion-list *ngSwitchCase="\'stxpage\'">\n\n             <br><br><br><br> <br><br><br><br>\n\n              <ion-list>\n\n         <h3 align="center">Total STX Balance</h3>\n\n         <div>\n\n          <p align="center">{{stxbalance}}</p>\n\n         </div>\n\n         <ion-grid>\n\n         <ion-row>\n\n            <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="openSendsPage(SendsPage)">Send</button>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <button class="button-backcolor" ion-button type="submit" block (click)="showStxConfirm()">Recieve</button>\n\n           </ion-col>\n\n         </ion-row>\n\n       </ion-grid>\n\n           <!--  <button class="button-backcolor" ion-button (click)="changespendingPassword(psForm)" type="submit" block>Save</button> -->\n\n          \n\n     </ion-list>\n\n           <h3 align="center">Transaction list</h3>\n\n           <ion-grid>\n\n             <ion-row>\n\n                <ion-col>\n\n                  Date\n\n                </ion-col>\n\n                <ion-col>\n\n                  Amount\n\n                </ion-col>\n\n                <ion-col>\n\n                  Transaction id\n\n                </ion-col>\n\n             </ion-row>\n\n           </ion-grid>\n\n\n\n           <ion-grid>\n\n            <ion-row *ngFor="let item of stxtx">\n\n              <ion-col>\n\n               {{item.time | date : \'dd-MM-yyyy hh:mm:ss\'}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{item.amount}}\n\n              </ion-col>\n\n              <ion-col>\n\n                {{(item.txid | slice:0:10)+".."}}\n\n              </ion-col>\n\n            </ion-row>\n\n          </ion-grid>\n\n             </ion-list>\n\n           </div>\n\n          </ion-list>\n\n      </form>\n\n </ion-content>\n\n '/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\wallet\wallet.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_user_data__["a" /* UserData */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
@@ -1779,7 +1844,7 @@ var SendPage = (function () {
         this.senddetails.userMailId = this.email;
         this.submitted = true;
         if (Form.valid) {
-            //this.userData.(this.send.amount);
+            this.userData.send(this.send.amount);
             var loading_1 = this.loadingCtrl.create({
                 content: 'transaction is procced...'
             });
@@ -1895,7 +1960,7 @@ var SendsPage = (function () {
         this.sendstxdetails.userMailId = this.email;
         this.submitted = true;
         if (Form.valid) {
-            //this.userData.send(this.send.amount);
+            this.userData.send(this.send.amount);
             var loading_1 = this.loadingCtrl.create({
                 content: 'transaction is procced...'
             });
@@ -1988,17 +2053,17 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_login_login__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_forgotpassword_forgotpassword__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_signup_signup__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_changepassword_changepassword__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_changepassword_changepassword__ = __webpack_require__(257);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_chatuserlist_chatuserlist__ = __webpack_require__(134);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_chatroom_chatroom__ = __webpack_require__(255);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_gmap_gmap__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__agm_core__ = __webpack_require__(233);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_setup_services__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_setting_setting__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_setting_setting__ = __webpack_require__(258);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_geolocation__ = __webpack_require__(130);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_conference_data__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_conference_data__ = __webpack_require__(259);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__providers_user_data__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_exchange_exchange__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_exchange_exchange__ = __webpack_require__(256);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_wallet_wallet__ = __webpack_require__(260);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_send_send__ = __webpack_require__(261);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_sends_sends__ = __webpack_require__(262);
@@ -2041,6 +2106,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+// import { DragulaModule } from 'ng2-dragula';
 var AppModule = (function () {
     function AppModule() {
     }
@@ -2078,13 +2144,13 @@ var AppModule = (function () {
                         { component: __WEBPACK_IMPORTED_MODULE_14__pages_chatuserlist_chatuserlist__["a" /* ChatuserlistPage */], name: 'ChatuserlistPage', segment: 'Chatuserlist' },
                         { component: __WEBPACK_IMPORTED_MODULE_24__pages_wallet_wallet__["a" /* WalletPage */], name: 'WalletPage', segment: 'wallet' },
                         { component: __WEBPACK_IMPORTED_MODULE_15__pages_chatroom_chatroom__["a" /* ChatroomPage */], name: 'ChatroomPage', segment: 'chatroom' },
-                        { component: __WEBPACK_IMPORTED_MODULE_23__pages_exchange_exchange__["a" /* ExchangePage */], name: 'ExchangePage', segment: 'exchange' },
+                        // { component: ExchangePage, name: 'ExchangePage', segment: 'exchange' },      
                         { component: __WEBPACK_IMPORTED_MODULE_19__pages_setting_setting__["a" /* SettingPage */], name: 'SettingsPage', segment: 'setting' },
                         { component: __WEBPACK_IMPORTED_MODULE_16__pages_gmap_gmap__["a" /* GmapPage */], name: 'Gmap', segment: 'gmap' },
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_7__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
-                __WEBPACK_IMPORTED_MODULE_27_ngx_qrcode2__["a" /* NgxQRCodeModule */]
+                __WEBPACK_IMPORTED_MODULE_27_ngx_qrcode2__["a" /* NgxQRCodeModule */],
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["d" /* IonicApp */]],
             entryComponents: [
@@ -2136,11 +2202,10 @@ var AppModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_signup_signup__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_chatuserlist_chatuserlist__ = __webpack_require__(134);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_gmap_gmap__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_setting_setting__ = __webpack_require__(257);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_conference_data__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_setting_setting__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_conference_data__ = __webpack_require__(259);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_user_data__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_exchange_exchange__ = __webpack_require__(259);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_wallet_wallet__ = __webpack_require__(260);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_wallet_wallet__ = __webpack_require__(260);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2150,7 +2215,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -2181,9 +2245,9 @@ var ConferenceApp = (function () {
         this.loadingCtrl = loadingCtrl;
         this.loggedInPages = [
             { title: 'FindTrader', name: 'GmapPage', component: __WEBPACK_IMPORTED_MODULE_9__pages_gmap_gmap__["a" /* GmapPage */], icon: 'md-pin' },
-            { title: 'Wallet', name: 'WalletPage', component: __WEBPACK_IMPORTED_MODULE_14__pages_wallet_wallet__["a" /* WalletPage */], icon: 'md-folder' },
+            { title: 'Wallet', name: 'WalletPage', component: __WEBPACK_IMPORTED_MODULE_13__pages_wallet_wallet__["a" /* WalletPage */], icon: 'md-folder' },
             { title: 'Chat', name: 'ChatuserlistPage', component: __WEBPACK_IMPORTED_MODULE_8__pages_chatuserlist_chatuserlist__["a" /* ChatuserlistPage */], icon: 'chatbubbles' },
-            { title: 'Exchange', name: 'ExchangePage', component: __WEBPACK_IMPORTED_MODULE_13__pages_exchange_exchange__["a" /* ExchangePage */], icon: 'md-swap' },
+            // { title: 'Exchange', name: 'ExchangePage', component: ExchangePage, icon: 'md-swap' },
             { title: 'Settings', name: 'SettingsPage', component: __WEBPACK_IMPORTED_MODULE_10__pages_setting_setting__["a" /* SettingPage */], icon: 'settings' },
             { title: 'Logout', name: null, component: null, icon: 'log-out', logsOut: true }
         ];
@@ -2556,7 +2620,7 @@ var GmapPage = (function () {
         this.trderinfoGet = { email: '' };
         this.traderBtcValueAfterUpdate = { email: '', buyRate: '0', currencyType: '', volume: '0', sellRate: '0' };
         this.traderInrValueAfterUpdate = { email: '', buyRate: '0', currencyType: '', volume: '0', sellRate: '0' };
-        this.io.sails.url = "http://192.168.0.125:3000";
+        this.io.sails.url = "http://192.168.0.133:3000";
         //this.io.sails.url = "http://localhost:3000";    
         this.data = false;
         this.userdata();
