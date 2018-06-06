@@ -15,7 +15,7 @@
 			<ion-row>
 				
 					<ion-item class="padding0">
-						<ion-input [(ngModel)]="signup.fullName" placeholder="Enter Full Name" name="fullName" type="text" #fullName="ngModel" required class="login-input">
+						<ion-input [(ngModel)]="signup.fullName" placeholder="Enter Full Name" name="fullName" type="text" #fullName="ngModel" required class="login-input" autocomplete="on">
 						</ion-input>
 					</ion-item>
 					<p ion-text [hidden]="fullName.valid || submitted == false" color="danger" padding-left>
@@ -26,7 +26,7 @@
 				<ion-row>
 				
 					<ion-item class="padding0">
-						<ion-input [(ngModel)]="signup.mobileNumber" placeholder="Enter Mobile Number" name="mobileNumber" number="number" #mobileNumber="ngModel" required class="login-input">
+						<ion-input [(ngModel)]="signup.mobileNumber" placeholder="Enter Mobile Number" name="mobileNumber" number="number" #mobileNumber="ngModel" required class="login-input" autocomplete="on">
 						</ion-input>
 					</ion-item>
 					<p ion-text [hidden]="mobileNumber.valid || submitted == false" color="danger" padding-left>
@@ -37,7 +37,7 @@
 			<ion-row>
 				<ion-col class="padding0">
 					<ion-item class="padding0">
-						<ion-input [(ngModel)]="signup.email" placeholder="Enter Email Id" name="email" type="email" #email="ngModel" required class="login-input" >
+						<ion-input [(ngModel)]="signup.email" placeholder="Enter Email Id" name="email" type="email" #email="ngModel" required class="login-input" autocomplete="on" >
 						</ion-input>
 					</ion-item>
 					<p ion-text [hidden]="email.valid || submitted == false" color="danger" padding-left>
@@ -51,7 +51,7 @@
 
 				<ion-col col-6 class="padding0">
 					<ion-item class="padding0">
-						<ion-input [(ngModel)]="signup.password" placeholder="Enter Password" name="password" type="password" #password="ngModel" required class="login-input" >
+						<ion-input [(ngModel)]="signup.password" placeholder="Enter Password" name="password" type="password" #password="ngModel" required class="login-input" autocomplete="on">
 						</ion-input>
 					</ion-item>
 					<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
@@ -60,7 +60,7 @@
 				</ion-col>
 				<ion-col col-6 class="padding0">
 					<ion-item class="padding0">
-						<ion-input [(ngModel)]="signup.confirmPassword" placeholder="Re-Enter Password" name="confirmpassword" type="password" #confirmPassword="ngModel" required class="login-input">
+						<ion-input [(ngModel)]="signup.confirmPassword" placeholder="Re-Enter Password" name="confirmpassword" type="password" #confirmPassword="ngModel" required class="login-input" autocomplete="on">
 						</ion-input>
 					</ion-item>
 					<p ion-text [hidden]="confirmPassword.valid || submitted == false" color="danger" padding-left>

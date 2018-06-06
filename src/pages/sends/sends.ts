@@ -34,7 +34,7 @@ export class SendsPage {
   public platform: Platform
    ) {
    var user =JSON.parse(localStorage.getItem('logindetail'));
-   this.email = user.trader.email;
+   this.email = user.user.email;
    let backAction =  platform.registerBackButtonAction(() => {
        this.navCtrl.pop();
        backAction();

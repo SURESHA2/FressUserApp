@@ -11,7 +11,7 @@
 	<form #loginForm="ngForm" novalidate >
 		<ion-list no-lines class="form-input-fields">
 			<ion-item>
-				<ion-input [(ngModel)]="loginDetail.email" placeholder="Enter Email Id" name="email" type="text" #email="ngModel" spellcheck="false" autocapitalize="off" class="login-input"
+				<ion-input [(ngModel)]="loginDetail.email" placeholder="Enter Email Id" name="email" type="text" #email="ngModel" spellcheck="false" autocapitalize="off" class="login-input" autocomplete="on"
 					required>
 				</ion-input>
 			</ion-item>
@@ -20,7 +20,7 @@
 			</p>
 
 			<ion-item>
-				<ion-input [(ngModel)]="loginDetail.password" placeholder="Enter Password" name="password" type="password" #password="ngModel" required class="login-input" >
+				<ion-input [(ngModel)]="loginDetail.password" placeholder="Enter Password" name="password" type="password" #password="ngModel" required class="login-input" autocomplete="on">
 				</ion-input>
 			</ion-item>
 			<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>

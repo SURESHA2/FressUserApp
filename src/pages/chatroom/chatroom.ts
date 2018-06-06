@@ -40,8 +40,8 @@ export class ChatroomPage {
     public events: Events
     ) {
   //this.io.sails.url = this._setupService.endpoint_url;    // connect to socket
-     this.io.sails.url = "http://192.168.0.133:3000"; 
-    // this.io.sails.url = "http://localhost:3000";
+   this.io.sails.url = "http://192.168.0.139:3000"; 
+    //this.io.sails.url = "http://localhost:3000";
   this.userdata();
 
     this.messageDetails.sender=this.UserId.email;

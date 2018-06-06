@@ -17,7 +17,7 @@ export class SetupService {
   }
 
       
-       endpoint_url : string = 'http://192.168.0.133:3000';
+       endpoint_url : string = 'http://192.168.0.139:3000';
        //endpoint_url : string = 'http://localhost:3000';
 
    //create new user account

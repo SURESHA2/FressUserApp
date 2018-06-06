@@ -12,7 +12,7 @@
   <br /><br /><br /><br /><br />
 
     <ion-item>
-      <ion-input [(ngModel)]="sendstxdetails.amount" placeholder="Enter Amount" name="amount" type="text" #amount="ngModel" spellcheck="false" autocapitalize="off" class="login-input"
+      <ion-input [(ngModel)]="sendstxdetails.amount" placeholder="Enter Amount" name="amount" type="text" #amount="ngModel" spellcheck="false"  autocomplete="on" autocapitalize="off" class="login-input"
           required>
         </ion-input>
       </ion-item>
@@ -23,8 +23,8 @@
 
       <ion-item>
 
-        <ion-input [(ngModel)]="sendstxdetails.address" placeholder="Enter Address" name="address" type="text" #address="ngModel" spellcheck="false" autocapitalize="off" class="login-input"
-          required>
+        <ion-input [(ngModel)]="sendstxdetails.address" placeholder="Enter Address" name="address" type="text" #address="ngModel" spellcheck="false" autocomplete="on" autocapitalize="off" class="login-input"
+          required >
         </ion-input>
       </ion-item>
       <p ion-text [hidden]="address.valid || submitted == false" color="danger" padding-left>
@@ -32,7 +32,7 @@
       </p>
 
       <ion-item>
-        <ion-input [(ngModel)]="sendstxdetails.spendingPassword" placeholder="Enter Spending Password" name="spendingPassword" type="password" #spendingPassword="ngModel" required class="login-input" >
+        <ion-input [(ngModel)]="sendstxdetails.spendingPassword" placeholder="Enter Spending Password" name="spendingPassword" type="password" #spendingPassword="ngModel" required class="login-input" autocomplete="on">
         </ion-input>
       </ion-item>
       <p ion-text [hidden]="spendingPassword.valid || submitted == false" color="danger" padding-left>

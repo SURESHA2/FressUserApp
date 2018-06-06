@@ -19,6 +19,7 @@ import { UserData } from '../../providers/user-data';
 
 
 
+
 //import { Clipboard } from '@ionic-native/clipboard';
 /**
  * Generated class for the WalletPage page.
@@ -251,21 +252,24 @@ async showConfirm(){
          text: 'copy',
          handler: data => {
           
-               this.clipboard.copy(btcaddress);
+               this.clipboard.copy('btcaddress');
                this.responseData = Text;
+
             let toast = this.toastCtrl.create({
                      message: this.responseData.Copy,
                      showCloseButton: true,
                      closeButtonText: 'Copyed successfully',
                      duration: 5000
+
                 });
                 toast.present(); 
          }
+
        },
        {
          text: 'Cancel',
          handler: data => {            
-              console.log("hello");
+              
          }
        },]
    });
@@ -302,7 +306,7 @@ openSendPage() {
        {
          text: 'Cancel',
          handler: data => {            
-              console.log("hello");
+             
          }
        },]
    });
