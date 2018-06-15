@@ -7,8 +7,9 @@ import *as sailsIOClient  from 'sails.io.js';
 import { UserEmailId } from '../../interfaces/user-options';
 import { ExchangePage } from '../exchange/exchange';
 import {  FabContainer } from 'ionic-angular';
-
-
+import { ModalController } from 'ionic-angular';
+import { ViewController } from 'ionic-angular';
+import { ChangemodelPage } from '../changemodel/changemodel';
 
 @IonicPage()
 @Component({
@@ -37,11 +38,13 @@ export class ChatroomPage {
     private navCtrl:NavController,
     private navParams: NavParams,
     public _setupService: SetupService, 
-    public events: Events
+    public events: Events,
+    public modalCtrl : ModalController,
+    public viewCtrl: ViewController
     ) {
   //this.io.sails.url = this._setupService.endpoint_url;    // connect to socket
-   this.io.sails.url = "http://192.168.0.139:3000"; 
-    //this.io.sails.url = "http://localhost:3000";
+   this.io.sails.url = "http://192.168.0.144:3000"; 
+   //this.io.sails.url = "http://localhost:3000";
   this.userdata();
 
     this.messageDetails.sender=this.UserId.email;
@@ -123,10 +126,33 @@ export class ChatroomPage {
         console.log('crap');
     }
 
-    gotoExchange(event, fab: FabContainer) {
-    fab.close();
-    this.navCtrl.push(ExchangePage);
-  }
+  //   gotoExchange(event, fab: FabContainer) {
+  //   fab.close();
+  //   this.navCtrl.push(ExchangePage);
+  // }
 
 
+openModal(characterNum) {  
+    let modal = this.modalCtrl.create(ChangemodelPage, {
+      'prop': 'prop1',
+      onFeedBack: (data) => {
+        console.log('Input callback' + JSON.stringify(data));
+      }
+    });
+
+    modal.onDidDismiss(data => {
+      console.log('Closed with data:' + JSON.stringify(data));
+    });
+
+    modal.present().then(result => {
+      // modal.overlay['subscribe']((z) => {
+      //   console.log(JSON.stringify(z));
+      // })
+      const testComp = modal.overlay['instance'] as ChangemodelPage;
+      // testComp.feedbackSubmit.subscribe(() => {
+      //   alert(1);
+      // })
+    });
+ 
+}
 }

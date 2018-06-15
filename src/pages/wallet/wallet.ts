@@ -116,16 +116,19 @@ userdata(){
   getWallletBalance(){
 
       this.setupService.createWalletDetail({userMailId:this.userEmail.email}).subscribe((result) => { 
-         this.BCHbalance = result.balance;
+        
+       
+         this.balance = result.user.BCHbalance;
          
-         return this.BCHbalance;
+         return this.balance;
     });
   }
   // For stx balence
   getStxWallletBalance(){
       this.setupService.createstxWalletDetail({userMailId:this.userEmail.email}).subscribe((result) => {
   
-         this.stxbalance = result.balance;
+         this.stxbalance = result.user.STXbalance;
+         return this.stxbalance;
     });
   }
 
@@ -231,13 +234,17 @@ userdata(){
 getStxTx(){
       this.setupService.createstxTransactionDetail({userMailId:this.userEmail.email}).subscribe((result) => {
         if(result.statusCode==200){
-          this.stxtx = result.tx;
+          //this.stxtx = result.tx;
+           this.stxtx = []
+           for(var i=0;i< result.tx.length;i++){
+            this.stxtx.push({time : new Date(result.tx[i].time*1000), amount : result.tx[i].amount, txid : result.tx[i].txid});
            } 
-         
+         }
+         console.log("this.tx************************",this.stxtx)
        });
        }
 //for btc address borcode reader
-async showConfirm(){
+ showConfirm(){
   console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
   // this.address = await this.createAddress();
    var btcaddress= this.address;
@@ -252,7 +259,7 @@ async showConfirm(){
          text: 'copy',
          handler: data => {
           
-               this.clipboard.copy('btcaddress');
+               this.clipboard.copy(btcaddress);
                this.responseData = Text;
 
             let toast = this.toastCtrl.create({

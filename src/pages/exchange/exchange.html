@@ -82,15 +82,19 @@
 <ion-content>
   <div [ngSwitch]="Exchange">
     <ion-list *ngSwitchCase="'Page'">
-      <ion-item>
-       <ion-icon item-left name="ios-flash"></ion-icon>
-       <ion-input type="text" placeholder="Enater Amount"></ion-input>
-       <ion-icon item-right name="Genrate" (click)="pickContactNo()"></ion-icon> 
-       </ion-item>
-        <ion-item>
-        <p align="center">Your Current Bitcoin Address:</p>
-       <img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl='++'"  alt="QR Code" style="width: 30%;" align="right" >
+      <p>{{amount}}</p>
+     <!--  <ion-item>
+        <ion-input [(ngModel)]="AmountDetails.amount" placeholder="Enter Amount" name="amount" type="text" #amount="ngModel" spellcheck="false" autocapitalize="off" class="login-input" autocomplete="on"
+          required>
+        </ion-input>
       </ion-item>
+      <p ion-text [hidden]="amount.valid || submitted == false" color="danger" padding-left>
+        amount Id is Required
+      </p>
+        <ion-item>
+         <p align="center">Your Current Bitcoin Address:{{amount}}</p> -->
+       <!-- <img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl='++'"  alt="QR Code" style="width: 30%;" align="right" >
+      </ion-item>  -->
       <ion-item>
       <h3>$BTC</h3>
       </ion-item>

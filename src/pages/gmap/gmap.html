@@ -29,7 +29,8 @@
   </div>
   <div *ngIf="data" class="trader-info" text-center>
       <div class="row no-margin footer-button-line-height white-text">
-        <div col-8 offset-2><h3>Trader's Information</h3><hr style="    height: 3.55px;    background-color: rgb(40, 144, 252);    width: 50px;"></div>
+        <div col-8 offset-2><h3>Trader's Information</h3>
+          <hr style="    height: 3.55px;    background-color: rgb(40, 144, 252);    width: 50px;"></div>
         <div class="col-2" col-8 offset-2>
           <ion-icon name="contact" class="icon-chat-user"></ion-icon>
         </div>
@@ -39,13 +40,14 @@
         <div col-12 text-center>
 
           <ion-row *ngFor="let trader of tradersUpdate">
-            <ion-col col-4 offset-1 style="    background: #2890fc; border-radius: 15px;color: #fff;">
-              <strong>buy</strong>-<strong>{{trader?.buyRate}} {{trader?.currencyType}}</strong>
-            </ion-col>&nbsp;
-            <ion-col col-3 style="    background: #2890fc; border-radius: 15px;color: #fff;">
+            <ion-col col-3 offset-1 style="   background: #2890fc; color: #fff;">
+              <strong>buy</strong>-<strong>{{trader?.buyRate}} <br>{{trader?.currencyType}}</strong>
+              <br>
+            </ion-col>&nbsp;&nbsp;
+            <ion-col col-3 style="    background: #2890fc; color: #fff;">
               <strong>sell</strong>-<strong>{{trader?.sellRate}} {{trader?.currencyType}}</strong>
-            </ion-col>&nbsp;
-            <ion-col col-3 style="    background: #2890fc;border-radius: 15px; color: #fff;">
+            </ion-col>&nbsp;&nbsp;
+            <ion-col col-3 style="    background: #2890fc; color: #fff;">
               <strong>volume</strong>-<strong>{{trader?.volume}}</strong>
             </ion-col>
           </ion-row>

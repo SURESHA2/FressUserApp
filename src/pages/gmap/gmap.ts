@@ -1,11 +1,12 @@
 import { AgmMap, MapsAPILoader, } from '@agm/core';
+import { } from 'googlemaps';
 import {  NavController,Platform, LoadingController,Events ,ToastController} from 'ionic-angular';
 import { Component, ElementRef,  NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Markers,ChatRequest,TrderinfoGet,updateValue } from '../../interfaces/user-options';
 import { SetupService } from '../../providers/setup.services';
 import { Storage } from '@ionic/storage';
-//import { UserData } from '../../providers/user-data';
+import { UserData } from '../../providers/user-data';
 import { Geolocation } from '@ionic-native/geolocation';
 import   *as socketIOClient  from 'socket.io-client';
 import *as sailsIOClient  from 'sails.io.js';
@@ -36,8 +37,8 @@ export class GmapPage implements OnInit{
    io:any= sailsIOClient(socketIOClient);
    tradersMarker: Markers[];
    currentUserMarkers: Markers[];
-   latitude: number;
-   longitude: number;
+   latitude: any;
+   longitude: any;
    zoom: number;
    icon:any;
    searchControl: FormControl;
@@ -69,10 +70,10 @@ export class GmapPage implements OnInit{
     private ngZone: NgZone )
    {
           
-          this.io.sails.url = "http://192.168.0.139:3000";  
-         // this.io.sails.url = "http://localhost:3000";    
+        this.io.sails.url = "http://103.201.142.41:3005";   
+        // this.io.sails.url = "http://localhost:3000";    
       this.data=false;
-      this.userdata();
+     this.userdata();
       if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.latitude = position.coords.latitude;
@@ -164,6 +165,7 @@ ionViewWillEnter() {
           this.longitude = place.geometry.location.lng();
           this.icon='assets/img/currentUserIcon.png';
           this.zoom = 16;
+          
         });
       });
     });

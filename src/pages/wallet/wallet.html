@@ -81,7 +81,7 @@
                   <ion-list>
          <h3 style="color: #3896ea;" align="center">Total BTC Balance</h3>
          <div>
-          <p align="center">{{BCHbalance}}</p>
+          <p align="center">{{balance}}</p>
          </div>
          <ion-grid>
          <ion-row>
@@ -168,9 +168,9 @@
            </ion-grid>
 
            <ion-grid>
-            <ion-row *ngFor="let item of stxtx">
+            <ion-row *ngFor="let item of tx">
               <ion-col>
-               {{item.time | date : 'dd-MM-yyyy hh:mm:ss'}}
+               {{item.time | date : 'dd-MM-yy hh:mm:ss'}}
               </ion-col>
               <ion-col>
                 {{item.amount}}

@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable'; 
+import 'rxjs/add/operator/do'; 
+import 'rxjs/add/operator/catch';
 
 /*
   Generated class for the ServicesProvider provider.
@@ -17,8 +20,8 @@ export class SetupService {
   }
 
       
-       endpoint_url : string = 'http://192.168.0.139:3000';
-       //endpoint_url : string = 'http://localhost:3000';
+      endpoint_url = "http://103.201.142.41:3005";
+      // endpoint_url : string = 'http://localhost:3000';
 
    //create new user account
     createUserAccount(SignUpDetail: any) {
@@ -35,22 +38,53 @@ export class SetupService {
      // create login
       createLoginDetail(loginDetail: any) {
      // alert("loginDetail = = "+JSON.stringfy(loginDetail));
-        var response = this.http.post(this.endpoint_url + '/user/login',loginDetail ).map(res => res.json());
+        let response = this.http.post(this.endpoint_url + '/user/login',loginDetail ).map(res => res.json());
         return response;
     }
 
     // walllet page
     createWalletDetail(userMailId:any) {   
-         
-        var response = this.http.post(this.endpoint_url+'/usercoin/getBalBCH',userMailId ).map(res => res.json());
-        return response;
+         var response = this.http.post(this.endpoint_url+'/usercoin/getBalBCH',userMailId ).map(res => res.json());
+         //.catch(this.handleError);
+
+          return response;
     }
+     // private handleError(error: Response) { 
+     //  console.error("response not comming:",error); 
+     //  if(error.status===404){
+     //    alert("Server is not responding,");
+     //  }
+     //  return Observable.throw(error.json().error; 
+    
+      
+
+    
     //For Stx WalletPage
      createstxWalletDetail(email:any) {   
          
         var response = this.http.post(this.endpoint_url+'/usercoin/getBalBCH',email ).map(res => res.json());
+       return response; 
+      //.catch(this.handleError); 
+   }  
+   //  private handleError(error: Response) { 
+   //    console.error(error); 
+   //    if(error.status===404)
+   //      alert("Server is not responding");
+   //    return Observable.throw(error.json().error()); 
+   // } 
+    
+    //For amount 
+     amountDetail(AmountDetails:any) {   
+         
+        var response = this.http.post(this.endpoint_url+'/crypto/compareamount',AmountDetails ).map(res => res.json());
         return response;
     }
+    //for change address
+    // PostRequest(addressDetail:any) {   
+         
+    //     var response = this.http.post(this.endpoint_url+'/crypto/compareamount',addressDetail ).map(res => res.json());
+    //     return response;
+    // }
     //Address details
      createAddressDetail(userMailId:any) {   
          
