@@ -24,7 +24,7 @@ import { UserData } from '../providers/user-data';
 import { ExchangePage } from '../pages/exchange/exchange';
 import { WalletPage } from '../pages/wallet/wallet';
 import { SendPage } from '../pages/send/send';
-import { ChangemodelPage } from '../pages/changemodel/changemodel';
+import { ModelPage } from '../pages/model/model';
 import { SendsPage } from '../pages/sends/sends';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
@@ -48,7 +48,7 @@ import { Clipboard } from '@ionic-native/clipboard';
     WalletPage,
     SendPage,
     SendsPage,
-    ChangemodelPage
+    ModelPage
     
  
   ],
@@ -94,7 +94,7 @@ import { Clipboard } from '@ionic-native/clipboard';
     WalletPage,
     SendPage,
     SendsPage,
-    ChangemodelPage
+    ModelPage
     
   ],
   providers: [

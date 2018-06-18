@@ -5,11 +5,11 @@ import { SetupService } from '../../providers/setup.services';
 import   *as socketIOClient  from 'socket.io-client';
 import *as sailsIOClient  from 'sails.io.js';
 import { UserEmailId } from '../../interfaces/user-options';
-import { ExchangePage } from '../exchange/exchange';
-import {  FabContainer } from 'ionic-angular';
+//import { ExchangePage } from '../exchange/exchange';
+//import {  FabContainer } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
-import { ChangemodelPage } from '../changemodel/changemodel';
+import { ModelPage } from '../model/model';
 
 @IonicPage()
 @Component({
@@ -30,7 +30,7 @@ export class ChatroomPage {
  chatid={
            "chatId": ""
   }
-
+  userName: string;
   myInfo = this.messages[0];
    UserId: UserEmailId = { email: '' };
   constructor(private ngZone: NgZone,
@@ -43,7 +43,7 @@ export class ChatroomPage {
     public viewCtrl: ViewController
     ) {
   //this.io.sails.url = this._setupService.endpoint_url;    // connect to socket
-   this.io.sails.url = "http://192.168.0.144:3000"; 
+   this.io.sails.url = "http://103.201.142.41:3005"; 
    //this.io.sails.url = "http://localhost:3000";
   this.userdata();
 
@@ -118,7 +118,7 @@ export class ChatroomPage {
 
 
  ionViewWillLeave() {
-   this.io.socket.disconnect();
+  // this.io.socket.disconnect();
    delete this.io.sails;
   }
 
@@ -132,27 +132,42 @@ export class ChatroomPage {
   // }
 
 
-openModal(characterNum) {  
-    let modal = this.modalCtrl.create(ChangemodelPage, {
-      'prop': 'prop1',
-      onFeedBack: (data) => {
-        console.log('Input callback' + JSON.stringify(data));
-      }
-    });
+// openModal(characterNum) {  
+//     let modal = this.modalCtrl.create(ChangemodelPage, {
+//       'prop': 'prop1',
+//       onFeedBack: (data) => {
+//         console.log('Input callback' + JSON.stringify(data));
+//       }
+//     });
 
-    modal.onDidDismiss(data => {
-      console.log('Closed with data:' + JSON.stringify(data));
-    });
+//     modal.onDidDismiss(data => {
+//       console.log('Closed with data:' + JSON.stringify(data));
+//     });
 
-    modal.present().then(result => {
-      // modal.overlay['subscribe']((z) => {
-      //   console.log(JSON.stringify(z));
-      // })
-      const testComp = modal.overlay['instance'] as ChangemodelPage;
-      // testComp.feedbackSubmit.subscribe(() => {
-      //   alert(1);
-      // })
-    });
+//     modal.present().then(result => {
+//       // modal.overlay['subscribe']((z) => {
+//       //   console.log(JSON.stringify(z));
+//       // })
+//       const testComp = modal.overlay['instance'] as ChangemodelPage;
+//       // testComp.feedbackSubmit.subscribe(() => {
+//       //   alert(1);
+//       // })
+//     });
  
+
+// openModal() {
+//   let obj = {userId: '1', name: 'Bob', email: 'bob@unicorn.com'};
+//   let myModal = this.modalCtrl.create(ModelPage, obj);
+//   myModal.present();
+// }
+
+openModal() {
+  let myModal = this.modalCtrl.create(ModelPage);
+
+  myModal.onDidDismiss(data => {
+    this.userName = data.userName;
+  });
+
+  myModal.present();
 }
 }

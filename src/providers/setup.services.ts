@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable'; 
+//import { Observable } from 'rxjs/Observable'; 
 import 'rxjs/add/operator/do'; 
 import 'rxjs/add/operator/catch';
 
@@ -99,6 +99,12 @@ export class SetupService {
         return response;
         
     }
+     getaDetail(userMailId:any) {   
+         
+        var response = this.http.post(this.endpoint_url+'/usercoin/getuserdetails',userMailId ).map(res => res.json());
+        return response;
+        
+    }
     //For Stx Address details
     createstxAddressDetail(email:any) {   
          
@@ -127,6 +133,13 @@ export class SetupService {
     createSendDetail(senddetails:any) {   
          
         var response = this.http.post(this.endpoint_url+'/usercoin/sendBCH',senddetails).map(res => res.json());
+      
+        return response;
+
+    }
+    sendRequestdetail(email:any) {   
+         
+        var response = this.http.post(this.endpoint_url+'usercoininr/getNewBCHAddress',email).map(res => res.json());
       
         return response;
 

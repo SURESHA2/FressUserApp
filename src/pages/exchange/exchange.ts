@@ -77,7 +77,7 @@ userdata(){
  getBTCAmount(){
 
       this.setupService.amountDetail({userMailId:this.userEmail.email}).subscribe((result) => { 
-        debugger
+       
      
          this.amount = result.amount;
          

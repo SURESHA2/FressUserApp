@@ -9,6 +9,12 @@ export interface SendOption {
 
 
 }
+export interface SendOptions {
+  amount: string,
+  address: string,
+
+
+}
 //for stx sendsOption
 export interface SendsOption {
   amount: string,
@@ -22,6 +28,13 @@ export interface SendDetail{
   amount:string,
   spendingPassword:any,
   userMailId:any
+  }
+  export interface AmountDetail{
+
+ 
+  amount:string,
+  
+  
   }
   // for stx details
   export interface SendsDetail{
@@ -87,6 +100,9 @@ export interface ChatRequest {
   recipient:string;
 }
 export interface UserEmailId{
+  email:string;
+}
+export interface UserEmailId1{
   email:string;
 }
 
