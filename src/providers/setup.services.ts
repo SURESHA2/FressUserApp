@@ -19,9 +19,9 @@ export class SetupService {
    // console.log('Hello ServicesProvider Provider');
   }
 
-      
-      endpoint_url = "http://103.201.142.41:3005";
-      // endpoint_url : string = 'http://localhost:3000';
+    // endpoint_url = "http://103.201.142.41:3005";
+    endpoint_url = "http://192.168.1.27:3000";
+      //endpoint_url : string = 'http://localhost:3000';
 
    //create new user account
     createUserAccount(SignUpDetail: any) {
@@ -112,6 +112,11 @@ export class SetupService {
         return response;
     }
 
+ createstxAddressDetail1(email:any) {   
+         
+        var response = this.http.post(this.endpoint_url+'/usercoininr/getNewBCHAddress',email ).map(res => res.json());
+        return response;
+    }
      getstxDetail(email:any) {   
          
         var response = this.http.post(this.endpoint_url+'/usercoininr/getuserdetails',email ).map(res => res.json());
@@ -209,7 +214,7 @@ export class SetupService {
         // get hard code data
         getTradersLocation(){
           // var response = this.http.get('assets/data/tradersLocation.json').map(res => res.json());
-          // return response;
+           //return response;
           var response = this.http.get(this.endpoint_url +'/trader/getTradersByLocation').map(res => res.json());
          return response;
         }

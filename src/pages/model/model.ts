@@ -3,8 +3,8 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { MenuController,ToastController,LoadingController,Events, AlertController, Platform,} from 'ionic-angular';
 import { UserData } from '../../providers/user-data';
 import { SetupService } from '../../providers/setup.services';
-import { UserEmailId, SendDetail} from '../../interfaces/user-options';
-import { SendOptions, AmountDetail } from '../../interfaces/user-options';
+import { UserEmailId,} from '../../interfaces/user-options';
+import { AmountDetail } from '../../interfaces/user-options';
 import { NgForm } from '@angular/forms';
 
 /**
@@ -117,7 +117,7 @@ userdata(){
 }
   
   onsendBalance(Form: NgForm){
-  this.amountdetails.UserEmail=this.email;
+  this.amountdetails=this.email;
   this.submitted = true;
   if (Form.valid) {
        //this.userData.send(this.send.amount);

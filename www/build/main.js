@@ -321,11 +321,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var SetupService = (function () {
     function SetupService(http) {
         this.http = http;
-        this.endpoint_url = "http://103.201.142.41:3005";
+        // endpoint_url = "http://103.201.142.41:3005";
+        this.endpoint_url = "http://192.168.1.27:3000";
         this.http = http;
         // console.log('Hello ServicesProvider Provider');
     }
-    // endpoint_url : string = 'http://localhost:3000';
+    //endpoint_url : string = 'http://localhost:3000';
     //create new user account
     SetupService.prototype.createUserAccount = function (SignUpDetail) {
         var response = this.http.post(this.endpoint_url + '/user/createNewUser', SignUpDetail).map(function (res) { return res.json(); });
@@ -391,6 +392,10 @@ var SetupService = (function () {
     };
     //For Stx Address details
     SetupService.prototype.createstxAddressDetail = function (email) {
+        var response = this.http.post(this.endpoint_url + '/usercoininr/getNewBCHAddress', email).map(function (res) { return res.json(); });
+        return response;
+    };
+    SetupService.prototype.createstxAddressDetail1 = function (email) {
         var response = this.http.post(this.endpoint_url + '/usercoininr/getNewBCHAddress', email).map(function (res) { return res.json(); });
         return response;
     };
@@ -467,7 +472,7 @@ var SetupService = (function () {
     // get hard code data
     SetupService.prototype.getTradersLocation = function () {
         // var response = this.http.get('assets/data/tradersLocation.json').map(res => res.json());
-        // return response;
+        //return response;
         var response = this.http.get(this.endpoint_url + '/trader/getTradersByLocation').map(function (res) { return res.json(); });
         return response;
     };
@@ -891,7 +896,8 @@ var ChatroomPage = (function () {
         this.myInfo = this.messages[0];
         this.UserId = { email: '' };
         //this.io.sails.url = this._setupService.endpoint_url;    // connect to socket
-        this.io.sails.url = "http://103.201.142.41:3005";
+        this.io.sails.url = "http://192.168.1.27:3000";
+        //this.io.sails.url = "http://103.201.142.41:3005"; 
         //this.io.sails.url = "http://localhost:3000";
         this.userdata();
         this.messageDetails.sender = this.UserId.email;
@@ -946,7 +952,7 @@ var ChatroomPage = (function () {
         });
     };
     ChatroomPage.prototype.ionViewWillLeave = function () {
-        this.io.socket.disconnect();
+        // this.io.socket.disconnect();
         delete this.io.sails;
     };
     ChatroomPage.prototype.openFilters = function () {
@@ -1103,7 +1109,7 @@ var ModelPage = (function () {
     };
     ModelPage.prototype.onsendBalance = function (Form) {
         var _this = this;
-        this.amountdetails.UserEmail = this.email;
+        this.amountdetails = this.email;
         this.submitted = true;
         if (Form.valid) {
             //this.userData.send(this.send.amount);
@@ -1148,12 +1154,22 @@ var ModelPage = (function () {
     };
     ModelPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-model',template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\model\model.html"*/'<!--\n  Generated template for the ModelPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n <ion-title>model </ion-title> \n    \n    \n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <form #Form="ngForm" novalidate>\n    <ion-list no-lines class="form-input-fields">\n  <br /><br /><br /><br /><br /> \n  <h3 align="center">Address</h3>\n   <ion-item>\n    <ion-label floating>{{address}}</ion-label>\n    <ion-input type="text"></ion-input>\n  </ion-item>\n<ion-item>\n      <ion-input [(ngModel)]="amountdetails.amount" placeholder="Enter Amount" name="amount" type="text" #amount="ngModel" spellcheck="false" autocapitalize="off" class="login-input"\n          required autocomplete="on">\n        </ion-input>\n      </ion-item>\n\n      <p ion-text [hidden]="amount.valid || submitted == false" color="danger" padding-left>\n       Amount is Required\n      </p>\n    \n          <button class="button-backcolor" ion-button (click)="onsendBalance(Form)" type="submit" block>send Request</button>\n         <button class="button-backcolor" ion-button  (click)="closeModal()" type="Close" block>Close</button>\n          <!-- <button class="button-backcolor" ion-button (click)="onsendBalance1(sForm)" type="submit" block>Resset</button> -->\n       \n     </ion-list> \n  </form>\n  \n</ion-content>'/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\model\model.html"*/,
+            selector: 'page-model',template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\model\model.html"*/'<!--\n  Generated template for the ModelPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n <ion-title>model </ion-title> \n    \n    \n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <form #Form="ngForm" novalidate>\n    <ion-list no-lines class="form-input-fields">\n  <br /><br /><br /><br /><br /> \n  <h3 align="center">Address</h3>\n   <ion-item>\n    <ion-label floating>{{address}}</ion-label>\n    <ion-input type="text"></ion-input>\n  </ion-item>\n<ion-item>\n      <ion-input [(ngModel)]="amountdetails.amount" placeholder="Enter Amount" name="amount" type="text" #amount="ngModel" spellcheck="false" autocapitalize="off" class="login-input"\n          required autocomplete="on">\n        </ion-input>\n      </ion-item>\n\n      <p ion-text [hidden]="amount.valid || submitted == false" color="danger" padding-left>\n       Amount is Required\n      </p>\n      <ion-row class="message_row">\n      <ion-col col-10>\n        <ion-item no-lines>\n          <ion-input type="text" placeholder="type your message here..." [(ngModel)]="userContent"></ion-input>\n        </ion-item>\n      </ion-col>\n       <ion-col col-3>\n        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="userContent ==\'\'">\n        Send\n      </button>\n      </ion-col>\n       </ion-row>\n    <!-- \n          <button class="button-backcolor" ion-button (click)="onsendBalance(Form)" type="submit" block>send Request</button> -->\n         <button class="button-backcolor" ion-button  (click)="closeModal()" type="Close" block>Close</button>\n          <!-- <button class="button-backcolor" ion-button (click)="onsendBalance1(sForm)" type="submit" block>Resset</button> -->\n       \n     </ion-list> \n  </form>\n  \n  \n    <ion-row class="message_row">\n      <ion-col col-10>\n        <ion-item no-lines>\n          <ion-input type="text" placeholder="type your message here..." [(ngModel)]="userContent"></ion-input>\n        </ion-item>\n      </ion-col>\n\n\n      <ion-col col-3>\n        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="userContent ==\'\'">\n        Send\n      </button>\n     \n   \n      </ion-col>\n    </ion-row>\n  \n\n  \n</ion-content>'/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\model\model.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__providers_user_data__["a" /* UserData */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_user_data__["a" /* UserData */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* MenuController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* MenuController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_3__providers_setup_services__["a" /* SetupService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_setup_services__["a" /* SetupService */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Platform */]) === "function" && _m || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_user_data__["a" /* UserData */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* MenuController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_setup_services__["a" /* SetupService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Platform */]])
     ], ModelPage);
     return ModelPage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 }());
 
 //# sourceMappingURL=model.js.map
@@ -2817,6 +2833,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+//import { UserData } from '../../providers/user-data';
 
 
 
@@ -2847,7 +2864,8 @@ var GmapPage = (function () {
         this.trderinfoGet = { email: '' };
         this.traderBtcValueAfterUpdate = { email: '', buyRate: '0', currencyType: '', volume: '0', sellRate: '0' };
         this.traderInrValueAfterUpdate = { email: '', buyRate: '0', currencyType: '', volume: '0', sellRate: '0' };
-        this.io.sails.url = "http://103.201.142.41:3005";
+        //this.io.sails.url = "http://103.201.142.41:3005"; 
+        this.io.sails.url = "http://192.168.1.27:3000";
         // this.io.sails.url = "http://localhost:3000";    
         this.data = false;
         this.userdata();
@@ -3003,11 +3021,11 @@ var GmapPage = (function () {
             }
         });
     };
-    //
     GmapPage.prototype.loadAllTraders = function () {
         var _this = this;
         this.tradersMarker = [];
         this._setupService.getTradersLocation().subscribe(function (res) {
+            console.log("res = = " + JSON.stringify(res));
             if (res) {
                 for (var _i = 0, _a = res.data; _i < _a.length; _i++) {
                     var traders = _a[_i];
@@ -3037,7 +3055,7 @@ var GmapPage = (function () {
     GmapPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["m" /* Component */])({
             selector: 'page-map',
-            styles: ["\n    agm-map {\n      height: 100%;\n      width:100%;\n    }\n  "],template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\gmap\gmap.html"*/'\n\n<ion-content class="gmapPage">\n\n  <button class="gmap-menu-button" ion-button menuToggle>\n\n    <ion-icon name="menu"></ion-icon>\n\n  </button>\n\n	<div class="form-group gmap-search">    \n\n      <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control gmap-search-input" #search [formControl]="searchControl">\n\n    <ion-icon name="locate" (click)="currenloct()" class="gmap-current-location"></ion-icon> \n\n  </div>\n\n     <agm-map #agmMap [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false"  [zoom]="zoom" (mapClick)="mapClicked($event)" style="position:fixed;" >\n\n        <agm-marker [latitude]="latitude" [longitude]="longitude" ></agm-marker>\n\n         <agm-circle [latitude]="latitude" [longitude]="longitude" [radius]="50" [fillColor]="\'blue\'"></agm-circle>\n\n         <agm-marker *ngFor="let m of tradersMarker; let i = index"\n\n          [latitude]="m.lat" [longitude]="m.lng" [title]="m.title"\n\n                                            [markerDraggable]="m.draggable" (dragEnd)="markerDragEnd(m, $event)" [iconUrl]="m.icon" (markerClick)="clickedMarker(m.title, i)"></agm-marker>\n\n      </agm-map>\n\n\n\n\n\n  <div *ngIf="!data" class="welcome-info text-center">\n\n      <div class="row no-margin footer-button-line-height white-text" text-center>\n\n        <div col-6 offset-3><h3>Hi, Welcome </h3><hr style="height: 3.55px;\n\n            background-color: rgba(255, 255, 255, 0.61);width: 50px;">\n\n  </div>\n\n        <div col-8 offset-2><p>To view nearby trader\'s please click on one of the ticker</p></div>\n\n\n\n      </div>\n\n\n\n\n\n  </div>\n\n  <div *ngIf="data" class="trader-info" text-center>\n\n      <div class="row no-margin footer-button-line-height white-text">\n\n        <div col-8 offset-2><h3>Trader\'s Information</h3>\n\n          <hr style="    height: 3.55px;    background-color: rgb(40, 144, 252);    width: 50px;"></div>\n\n        <div class="col-2" col-8 offset-2>\n\n          <ion-icon name="contact" class="icon-chat-user"></ion-icon>\n\n        </div>\n\n        <div col-8 offset-2>\n\n          <p><strong>Email: {{trderinfoGet?.email}}</strong></p>\n\n        </div>\n\n        <div col-12 text-center>\n\n\n\n          <ion-row *ngFor="let trader of tradersUpdate">\n\n            <ion-col col-3 offset-1 style="   background: #2890fc; color: #fff;">\n\n              <strong>buy</strong>-<strong>{{trader?.buyRate}} <br>{{trader?.currencyType}}</strong>\n\n              <br>\n\n            </ion-col>&nbsp;&nbsp;\n\n            <ion-col col-3 style="    background: #2890fc; color: #fff;">\n\n              <strong>sell</strong>-<strong>{{trader?.sellRate}} {{trader?.currencyType}}</strong>\n\n            </ion-col>&nbsp;&nbsp;\n\n            <ion-col col-3 style="    background: #2890fc; color: #fff;">\n\n              <strong>volume</strong>-<strong>{{trader?.volume}}</strong>\n\n            </ion-col>\n\n          </ion-row>\n\n\n\n\n\n         \n\n        </div>\n\n      </div>\n\n    <div class="row no-margin footer-button-line-height white-text">\n\n       <button ion-button block (click)="requestToTraders(trderinfoGet?.email)">Request</button>\n\n    </div>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\gmap\gmap.html"*/,
+            styles: ["\n    agm-map {\n      height: 100%;\n      width:100%;\n    }\n  "],template:/*ion-inline-start:"F:\Ionic_Project\StreetxUserApp\src\pages\gmap\gmap.html"*/'\n\n<ion-content class="gmapPage">\n\n  <button class="gmap-menu-button" ion-button menuToggle>\n\n    <ion-icon name="menu"></ion-icon>\n\n  </button>\n\n	<div class="form-group gmap-search">    \n\n      <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control gmap-search-input" #search [formControl]="searchControl">\n\n    <ion-icon name="locate" (click)="currenloct()" class="gmap-current-location"></ion-icon> \n\n  </div>\n\n     <agm-map #agmMap [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false"  [zoom]="zoom" (mapClick)="mapClicked($event)" style="position:fixed;" >\n\n        <agm-marker [latitude]="latitude" [longitude]="longitude" ></agm-marker>\n\n         <agm-circle [latitude]="latitude" [longitude]="longitude" [radius]="50" [fillColor]="\'blue\'"></agm-circle>\n\n         <agm-marker *ngFor="let m of tradersMarker; let i = index"\n\n          [latitude]="m.lat" [longitude]="m.lng" [title]="m.title"[markerDraggable]="m.draggable" (dragEnd)="markerDragEnd(m, $event)" [iconUrl]="m.icon" (markerClick)="clickedMarker(m.title, i)"></agm-marker>\n\n      </agm-map>\n\n\n\n\n\n  <div *ngIf="!data" class="welcome-info text-center">\n\n      <div class="row no-margin footer-button-line-height white-text" text-center>\n\n        <div col-6 offset-3><h3>Hi, Welcome </h3><hr style="height: 3.55px;\n\n            background-color: rgba(255, 255, 255, 0.61);width: 50px;">\n\n  </div>\n\n        <div col-8 offset-2><p>To view nearby trader\'s please click on one of the ticker</p></div>\n\n\n\n      </div>\n\n\n\n\n\n  </div>\n\n  <div *ngIf="data" class="trader-info" text-center>\n\n      <div class="row no-margin footer-button-line-height white-text">\n\n        <div col-8 offset-2><h3>Trader\'s Information</h3>\n\n          <hr style="    height: 3.55px;    background-color: rgb(40, 144, 252);    width: 50px;"></div>\n\n        <div class="col-2" col-8 offset-2>\n\n          <ion-icon name="contact" class="icon-chat-user"></ion-icon>\n\n        </div>\n\n        <div col-8 offset-2>\n\n          <p><strong>Email: {{trderinfoGet?.email}}</strong></p>\n\n        </div>\n\n        <div col-12 text-center>\n\n\n\n          <ion-row *ngFor="let trader of tradersUpdate">\n\n            <ion-col col-3 offset-1 style="   background: #2890fc; color: #fff;">\n\n              <strong>buy</strong>-<strong>{{trader?.buyRate}} <br>{{trader?.currencyType}}</strong>\n\n              <br>\n\n            </ion-col>&nbsp;&nbsp;\n\n            <ion-col col-3 style="    background: #2890fc; color: #fff;">\n\n              <strong>sell</strong>-<strong>{{trader?.sellRate}} {{trader?.currencyType}}</strong>\n\n            </ion-col>&nbsp;&nbsp;\n\n            <ion-col col-3 style="    background: #2890fc; color: #fff;">\n\n              <strong>volume</strong>-<strong>{{trader?.volume}}</strong>\n\n            </ion-col>\n\n          </ion-row>\n\n\n\n\n\n         \n\n        </div>\n\n      </div>\n\n    <div class="row no-margin footer-button-line-height white-text">\n\n       <button ion-button block (click)="requestToTraders(trderinfoGet?.email)">Request</button>\n\n    </div>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"F:\Ionic_Project\StreetxUserApp\src\pages\gmap\gmap.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],

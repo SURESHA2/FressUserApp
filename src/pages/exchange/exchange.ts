@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 //import { IonicPage, NavController, NavParams,Platform } from 'ionic-angular';
 
 //import { NgForm } from '@angular/forms';
-import { IonicPage, NavController, NavParams,Platform, MenuController,ToastController,LoadingController,Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,Platform } from 'ionic-angular';
 //import { UserData } from '../../providers/user-data';
 //import { UserOptions,LoginDetail } from '../../interfaces/user-options';
 //import { ForgotpasswordPage } from '../forgotpassword/forgotpassword';

@@ -6,7 +6,7 @@ import { FormControl } from '@angular/forms';
 import { Markers,ChatRequest,TrderinfoGet,updateValue } from '../../interfaces/user-options';
 import { SetupService } from '../../providers/setup.services';
 import { Storage } from '@ionic/storage';
-import { UserData } from '../../providers/user-data';
+//import { UserData } from '../../providers/user-data';
 import { Geolocation } from '@ionic-native/geolocation';
 import   *as socketIOClient  from 'socket.io-client';
 import *as sailsIOClient  from 'sails.io.js';
@@ -69,8 +69,8 @@ export class GmapPage implements OnInit{
     public _setupService: SetupService, 
     private ngZone: NgZone )
    {
-          
-        this.io.sails.url = "http://103.201.142.41:3005";   
+        //this.io.sails.url = "http://103.201.142.41:3005"; 
+        this.io.sails.url = "http://192.168.1.27:3000";   
         // this.io.sails.url = "http://localhost:3000";    
       this.data=false;
      this.userdata();
@@ -149,7 +149,7 @@ ionViewWillEnter() {
     this.loadAllTraders();
     //load Places Autocomplete Work pending for auto search within function
     this.mapsAPILoader.load().then(() => {
-
+       
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["address"]
       });
@@ -249,11 +249,11 @@ ionViewWillEnter() {
   }
 
 
-  //
+  
   loadAllTraders(){
     this.tradersMarker = [];
    this._setupService.getTradersLocation().subscribe((res) => {
-
+   console.log("res = = "+JSON.stringify(res));
      if (res) {
        for(var traders of res.data){
                 this.tradersMarker.push({

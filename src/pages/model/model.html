@@ -34,12 +34,44 @@
       <p ion-text [hidden]="amount.valid || submitted == false" color="danger" padding-left>
        Amount is Required
       </p>
-    
-          <button class="button-backcolor" ion-button (click)="onsendBalance(Form)" type="submit" block>send Request</button>
+      <ion-row class="message_row">
+      <ion-col col-10>
+        <ion-item no-lines>
+          <ion-input type="text" placeholder="type your message here..." [(ngModel)]="userContent"></ion-input>
+        </ion-item>
+      </ion-col>
+       <ion-col col-3>
+        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="userContent ==''">
+        Send
+      </button>
+      </ion-col>
+       </ion-row>
+    <!-- 
+          <button class="button-backcolor" ion-button (click)="onsendBalance(Form)" type="submit" block>send Request</button> -->
          <button class="button-backcolor" ion-button  (click)="closeModal()" type="Close" block>Close</button>
           <!-- <button class="button-backcolor" ion-button (click)="onsendBalance1(sForm)" type="submit" block>Resset</button> -->
        
      </ion-list> 
   </form>
+  
+  
+    <ion-row class="message_row">
+      <ion-col col-10>
+        <ion-item no-lines>
+          <ion-input type="text" placeholder="type your message here..." [(ngModel)]="userContent"></ion-input>
+        </ion-item>
+      </ion-col>
+
+
+      <ion-col col-3>
+        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="userContent ==''">
+        Send
+      </button>
+     
+   
+      </ion-col>
+    </ion-row>
+  
+
   
 </ion-content>

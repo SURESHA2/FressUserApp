@@ -11,8 +11,7 @@
         <agm-marker [latitude]="latitude" [longitude]="longitude" ></agm-marker>
          <agm-circle [latitude]="latitude" [longitude]="longitude" [radius]="50" [fillColor]="'blue'"></agm-circle>
          <agm-marker *ngFor="let m of tradersMarker; let i = index"
-          [latitude]="m.lat" [longitude]="m.lng" [title]="m.title"
-                                            [markerDraggable]="m.draggable" (dragEnd)="markerDragEnd(m, $event)" [iconUrl]="m.icon" (markerClick)="clickedMarker(m.title, i)"></agm-marker>
+          [latitude]="m.lat" [longitude]="m.lng" [title]="m.title"[markerDraggable]="m.draggable" (dragEnd)="markerDragEnd(m, $event)" [iconUrl]="m.icon" (markerClick)="clickedMarker(m.title, i)"></agm-marker>
       </agm-map>
 
 

@@ -43,8 +43,10 @@ export class ChatroomPage {
     public viewCtrl: ViewController
     ) {
   //this.io.sails.url = this._setupService.endpoint_url;    // connect to socket
-   this.io.sails.url = "http://103.201.142.41:3005"; 
-   //this.io.sails.url = "http://localhost:3000";
+   this.io.sails.url = "http://192.168.1.27:3000";
+   //this.io.sails.url = "http://103.201.142.41:3005"; 
+ 
+  //this.io.sails.url = "http://localhost:3000";
   this.userdata();
 
     this.messageDetails.sender=this.UserId.email;
@@ -74,8 +76,11 @@ export class ChatroomPage {
      // get old message based on chat id
 
      this._setupService.getChatMessages({chatId:this.messageDetails.chatId}).subscribe((response)=>{
+     
        if(response.statusCode==200){
+
         this.messages=response.data;
+
       }else{
 
       }
